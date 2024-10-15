@@ -14,16 +14,29 @@ int main(int argc, char *argv[]) {
     DisplayFile displayFile;
 
     // Adicionando objetos ao DisplayFile
-    //QVector<QPoint> point = { QPoint(100, 100) };
-    //displayFile.addObject(DisplayObject("Point1", PointType, point));
 
-    for(int i=0;i<=200;i++){
-        QVector<QPoint> line = { QPoint(50+i, i), QPoint(50-i,i) };
-        displayFile.addObject(DisplayObject("Line1", LineType, line));
+    QVector<QPoint> point = { QPoint(110, 75) };
+    displayFile.addObject(DisplayObject("Point1", PointType, point));
+
+    //TriForce (Linhas)
+    for(int i=0;i<50;i++){
+        QVector<QPoint> triforce1 = { QPoint(60+i, 55+i), QPoint(60-i,55+i) };
+        displayFile.addObject(DisplayObject("Esquerda", LineType, triforce1));
+    }
+    for(int i=0;i<50;i++){
+        QVector<QPoint> triforce2 = { QPoint(160+i, 55+i), QPoint(160-i, 55+i) };
+        displayFile.addObject(DisplayObject("Direita", LineType, triforce2));
+    }
+    for(int i=0;i<50;i++){
+        QVector<QPoint> triforce3 = { QPoint(110+i, i+5), QPoint(110-i,i+5) };
+        displayFile.addObject(DisplayObject("Cima", LineType, triforce3));
     }
 
-    //QVector<QPoint> polygon = { QPoint(200, 200), QPoint(250, 250), QPoint(250, 200) };
-    //displayFile.addObject(DisplayObject("Polygon1", PolygonType, polygon));
+    // Bordas (Poligonos)
+    QVector<QPoint> borda_ext = { QPoint(110, 0), QPoint(0, 110), QPoint(220, 110) };
+    displayFile.addObject(DisplayObject("Externa", PolygonType, borda_ext));
+    QVector<QPoint> borda_int = { QPoint(70, 60), QPoint(150, 60), QPoint(110, 100) };
+    displayFile.addObject(DisplayObject("Interna", PolygonType, borda_int));
 
     // Criando o CanvasWidget
     CanvasWidget* canvas = new CanvasWidget();
@@ -31,7 +44,7 @@ int main(int argc, char *argv[]) {
 
     // Definindo o CanvasWidget como a central da janela
     window.setCentralWidget(canvas);
-    window.resize(400, 400);
+    window.resize(220, 115);
     window.show();
 
     return app.exec();
