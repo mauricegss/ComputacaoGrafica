@@ -10,16 +10,16 @@ enum ObjectType { PointType, LineType, PolygonType };
 
 class DisplayObject {
 public:
-    DisplayObject(const QString& name, ObjectType type, const QVector<QPoint>& points);
+    DisplayObject(const QString& nome, ObjectType tipo, const QVector<QPoint>& pontos);
 
-    QString getName() const;
-    ObjectType getType() const;
-    QVector<QPoint> getPoints() const;
+    QString getNome() const;
+    ObjectType getTipo() const;
+    QVector<QPoint> getPontos() const;
 
 private:
-    QString name;
-    ObjectType type;
-    QVector<QPoint> points;  // Lista de pontos
+    QString nome;
+    ObjectType tipo;
+    QVector<QPoint> pontos;  // Lista de pontos
 };
 
 #endif // DISPLAYOBJECT_H

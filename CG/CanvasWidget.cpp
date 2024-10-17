@@ -6,7 +6,7 @@ CanvasWidget::CanvasWidget(QWidget *parent) : QWidget(parent), displayFile(nullp
 
 void CanvasWidget::setDisplayFile(DisplayFile* displayFile) {
     this->displayFile = displayFile;
-    update();  // Solicita a atualização da tela
+    update();  // solicita a atualização da tela
 }
 
 void CanvasWidget::paintEvent(QPaintEvent *event) {
@@ -18,9 +18,9 @@ void CanvasWidget::paintEvent(QPaintEvent *event) {
     QVector<DisplayObject> objects = displayFile->getObjects();
 
     for (const DisplayObject& obj : objects) {
-        QVector<QPoint> points = obj.getPoints();
+        QVector<QPoint> points = obj.getPontos();
 
-        switch (obj.getType()) {
+        switch (obj.getTipo()) {
         case PointType:
             painter.drawPoint(points[0]);
             break;

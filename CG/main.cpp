@@ -10,13 +10,13 @@ int main(int argc, char *argv[]) {
 
     QMainWindow window;
 
-    // Criação do DisplayFile
+    // criação do DisplayFile
     DisplayFile displayFile;
 
     // Adicionando objetos ao DisplayFile
 
-    QVector<QPoint> point = { QPoint(110, 75) };
-    displayFile.addObject(DisplayObject("Point1", PointType, point));
+    QVector<QPoint> ponto = { QPoint(110, 75) };
+    displayFile.addObject(DisplayObject("Point1", PointType, ponto));
 
     //TriForce (Linhas)
     for(int i=0;i<50;i++){
@@ -42,10 +42,12 @@ int main(int argc, char *argv[]) {
     CanvasWidget* canvas = new CanvasWidget();
     canvas->setDisplayFile(&displayFile);
 
-    // Definindo o CanvasWidget como a central da janela
+    // centralizando o CanvasWidget
     window.setCentralWidget(canvas);
     window.resize(220, 115);
     window.show();
 
     return app.exec();
 }
+
+
