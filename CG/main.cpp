@@ -1,9 +1,9 @@
 // main.cpp
 #include <QApplication>
 #include <QMainWindow>
-#include "CanvasWidget.h"
-#include "DisplayFile.h"
-#include "DisplayObject.h"
+#include "tela.h"
+#include "displayfile.h"
+#include "displayobject.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
@@ -38,8 +38,8 @@ int main(int argc, char *argv[]) {
     QVector<QPoint> borda_int = { QPoint(70, 60), QPoint(150, 60), QPoint(110, 100) };
     displayFile.addObject(DisplayObject("Interna", PolygonType, borda_int));
 
-    // Criando o CanvasWidget
-    CanvasWidget* canvas = new CanvasWidget();
+    // Criando o Tela
+    Tela* canvas = new Tela();
     canvas->setDisplayFile(&displayFile);
 
     // centralizando o CanvasWidget

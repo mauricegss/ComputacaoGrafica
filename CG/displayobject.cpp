@@ -1,5 +1,5 @@
 // DisplayObject.cpp
-#include "DisplayObject.h"
+#include "displayobject.h"
 
 DisplayObject::DisplayObject(const QString& nome, ObjectType tipo, const QVector<QPoint>& pontos)
     : nome(nome), tipo(tipo), pontos(pontos) {}

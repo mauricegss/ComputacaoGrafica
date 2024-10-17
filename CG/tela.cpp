@@ -1,15 +1,15 @@
-// CanvasWidget.cpp
-#include "CanvasWidget.h"
+// Tela.cpp
+#include "tela.h"
 #include <QPainter>
 
-CanvasWidget::CanvasWidget(QWidget *parent) : QWidget(parent), displayFile(nullptr) {}
 
-void CanvasWidget::setDisplayFile(DisplayFile* displayFile) {
+
+void Tela::setDisplayFile(DisplayFile* displayFile) {
     this->displayFile = displayFile;
     update();  // solicita a atualização da tela
 }
 
-void CanvasWidget::paintEvent(QPaintEvent *event) {
+void Tela::paintEvent(QPaintEvent *event) {
     QWidget::paintEvent(event);
 
     if (!displayFile) return;
