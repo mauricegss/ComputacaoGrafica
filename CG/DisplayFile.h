@@ -2,7 +2,7 @@
 #ifndef DISPLAYFILE_H
 #define DISPLAYFILE_H
 
-#include "DisplayObject.h"
+#include "displayobject.h"
 #include <QVector>
 
 class DisplayFile {

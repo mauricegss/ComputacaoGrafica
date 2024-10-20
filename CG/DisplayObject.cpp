@@ -1,17 +1,17 @@
 // DisplayObject.cpp
-#include "DisplayObject.h"
+#include "displayobject.h"
 
-DisplayObject::DisplayObject(const QString& name, ObjectType type, const QVector<QPoint>& points)
-    : name(name), type(type), points(points) {}
+DisplayObject::DisplayObject(const QString& nome, ObjectType tipo, const QVector<QPoint>& pontos)
+    : nome(nome), tipo(tipo), pontos(pontos) {}
 
-QString DisplayObject::getName() const {
-    return name;
+QString DisplayObject::getNome() const {
+    return nome;
 }
 
-ObjectType DisplayObject::getType() const {
-    return type;
+ObjectType DisplayObject::getTipo() const {
+    return tipo;
 }
 
-QVector<QPoint> DisplayObject::getPoints() const {
-    return points;
+QVector<QPoint> DisplayObject::getPontos() const {
+    return pontos;
 }

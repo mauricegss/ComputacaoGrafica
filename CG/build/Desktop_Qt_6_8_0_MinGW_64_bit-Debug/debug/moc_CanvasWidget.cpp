@@ -33,16 +33,16 @@ QT_WARNING_DISABLE_GCC("-Wuseless-cast")
 namespace {
 
 #ifdef QT_MOC_HAS_STRINGDATA
-struct qt_meta_stringdata_CLASSCanvasWidgetENDCLASS_t {};
-constexpr auto qt_meta_stringdata_CLASSCanvasWidgetENDCLASS = QtMocHelpers::stringData(
-    "CanvasWidget"
+struct qt_meta_stringdata_CLASSTelaENDCLASS_t {};
+constexpr auto qt_meta_stringdata_CLASSTelaENDCLASS = QtMocHelpers::stringData(
+    "Tela"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
 #endif // !QT_MOC_HAS_STRINGDATA
 } // unnamed namespace
 
-Q_CONSTINIT static const uint qt_meta_data_CLASSCanvasWidgetENDCLASS[] = {
+Q_CONSTINIT static const uint qt_meta_data_CLASSTelaENDCLASS[] = {
 
  // content:
       12,       // revision
@@ -58,20 +58,20 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSCanvasWidgetENDCLASS[] = {
        0        // eod
 };
 
-Q_CONSTINIT const QMetaObject CanvasWidget::staticMetaObject = { {
+Q_CONSTINIT const QMetaObject Tela::staticMetaObject = { {
     QMetaObject::SuperData::link<QWidget::staticMetaObject>(),
-    qt_meta_stringdata_CLASSCanvasWidgetENDCLASS.offsetsAndSizes,
-    qt_meta_data_CLASSCanvasWidgetENDCLASS,
+    qt_meta_stringdata_CLASSTelaENDCLASS.offsetsAndSizes,
+    qt_meta_data_CLASSTelaENDCLASS,
     qt_static_metacall,
     nullptr,
-    qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSCanvasWidgetENDCLASS_t,
+    qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSTelaENDCLASS_t,
         // Q_OBJECT / Q_GADGET
-        QtPrivate::TypeAndForceComplete<CanvasWidget, std::true_type>
+        QtPrivate::TypeAndForceComplete<Tela, std::true_type>
     >,
     nullptr
 } };
 
-void CanvasWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void Tela::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     (void)_o;
     (void)_id;
@@ -79,20 +79,20 @@ void CanvasWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
     (void)_a;
 }
 
-const QMetaObject *CanvasWidget::metaObject() const
+const QMetaObject *Tela::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *CanvasWidget::qt_metacast(const char *_clname)
+void *Tela::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_CLASSCanvasWidgetENDCLASS.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_CLASSTelaENDCLASS.stringdata0))
         return static_cast<void*>(this);
     return QWidget::qt_metacast(_clname);
 }
 
-int CanvasWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int Tela::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QWidget::qt_metacall(_c, _id, _a);
     return _id;

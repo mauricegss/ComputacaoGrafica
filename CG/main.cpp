@@ -1,22 +1,22 @@
 // main.cpp
 #include <QApplication>
 #include <QMainWindow>
-#include "CanvasWidget.h"
-#include "DisplayFile.h"
-#include "DisplayObject.h"
+#include "tela.h"
+#include "displayfile.h"
+#include "displayobject.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
     QMainWindow window;
 
-    // Criação do DisplayFile
+    // criação do DisplayFile
     DisplayFile displayFile;
 
     // Adicionando objetos ao DisplayFile
 
-    QVector<QPoint> point = { QPoint(110, 75) };
-    displayFile.addObject(DisplayObject("Point1", PointType, point));
+    QVector<QPoint> ponto = { QPoint(110, 80) };
+    displayFile.addObject(DisplayObject("Point1", PointType, ponto));
 
     //TriForce (Linhas)
     for(int i=0;i<50;i++){
@@ -35,17 +35,19 @@ int main(int argc, char *argv[]) {
     // Bordas (Poligonos)
     QVector<QPoint> borda_ext = { QPoint(110, 0), QPoint(0, 110), QPoint(220, 110) };
     displayFile.addObject(DisplayObject("Externa", PolygonType, borda_ext));
-    QVector<QPoint> borda_int = { QPoint(70, 60), QPoint(150, 60), QPoint(110, 100) };
-    displayFile.addObject(DisplayObject("Interna", PolygonType, borda_int));
+    QVector<QPoint> rupee = {QPoint(110, 100), QPoint(97, 87), QPoint(97,70), QPoint(110,57),QPoint(123, 70), QPoint(123, 87) };
+    displayFile.addObject(DisplayObject("rupee", PolygonType, rupee));
 
-    // Criando o CanvasWidget
-    CanvasWidget* canvas = new CanvasWidget();
+    // Criando o Tela
+    Tela* canvas = new Tela();
     canvas->setDisplayFile(&displayFile);
 
-    // Definindo o CanvasWidget como a central da janela
+    // centralizando o CanvasWidget
     window.setCentralWidget(canvas);
     window.resize(220, 115);
     window.show();
 
     return app.exec();
 }
+
+
