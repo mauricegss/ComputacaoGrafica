@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 
     // Adicionando objetos ao DisplayFile
 
-    QVector<QPoint> ponto = { QPoint(110, 80) };
+    QVector<QPoint> ponto = { QPoint(110, 75) };
     displayFile.addObject(DisplayObject("Point1", PointType, ponto));
 
     //TriForce (Linhas)
@@ -35,8 +35,8 @@ int main(int argc, char *argv[]) {
     // Bordas (Poligonos)
     QVector<QPoint> borda_ext = { QPoint(110, 0), QPoint(0, 110), QPoint(220, 110) };
     displayFile.addObject(DisplayObject("Externa", PolygonType, borda_ext));
-    QVector<QPoint> rupee = {QPoint(110, 100), QPoint(97, 87), QPoint(97,70), QPoint(110,57),QPoint(123, 70), QPoint(123, 87) };
-    displayFile.addObject(DisplayObject("rupee", PolygonType, rupee));
+    QVector<QPoint> borda_int = { QPoint(70, 60), QPoint(150, 60), QPoint(110, 100) };
+    displayFile.addObject(DisplayObject("Interna", PolygonType, borda_int));
 
     // Criando o Tela
     Tela* canvas = new Tela();
