@@ -11,14 +11,12 @@ CONFIG += c++17
 SOURCES += \
     Matriz.cpp \
     MyWidget.cpp \
-    Pontos.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     Matriz.h \
     MyWidget.h \
-    Pontos.h \
     mainwindow.h
 
 FORMS += \

@@ -12,13 +12,16 @@ int main(int argc, char *argv[]) {
     myWidget.show();
 
     QVector<Pontos> quad1 = { {100, 100}, {200,100}, {200,200}, {100,200} };
-    myWidget.setObjetos(quad1);
+    myWidget.adicionarObjeto(quad1);
+
     QVector<Pontos> quad2 = { {100, 100}, {200,100}, {200,200}, {100,200} };
+    escalonar(quad2,2,2);
+    myWidget.adicionarObjeto(quad2);
+
     rotacionar(quad2, 0.785398);
-    myWidget.setObjetos(quad2);
+    myWidget.adicionarObjeto(quad2);
 
-
-    myWidget.setWindowTitle("Computacao Gráfica");
+    myWidget.setWindowTitle("Computação Gráfica");
     myWidget.resize(300,300);
 
     return app.exec();

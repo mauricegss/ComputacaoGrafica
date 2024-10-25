@@ -1,13 +1,12 @@
 #include "MyWidget.h"
-#include <QPainter>
 
 MyWidget::MyWidget(QWidget *parent) : QWidget(parent) {
     // Inicialização, se necessário
 }
 
-void MyWidget::setObjetos(const QVector<Pontos> &novosObjetos) {
-    this->objetos += novosObjetos; // Adiciona os novos objetos ao vetor existente
-    update(); // Solicita atualização para redesenhar todos
+void MyWidget::adicionarObjeto(const QVector<Pontos> &novosObjetos) {
+    this->objetos.append(novosObjetos); // Adiciona o novo polígono ao vetor de polígonos
+    update(); // Solicita atualização para redesenhar
 }
 
 void MyWidget::paintEvent(QPaintEvent *event) {
@@ -18,17 +17,19 @@ void MyWidget::paintEvent(QPaintEvent *event) {
 }
 
 void MyWidget::Desenhar(QPainter &painter) {
+    for (const QVector<Pontos>& poligono : objetos) {
+        if (poligono.size() == 1) {
+            painter.drawPoint(poligono[0].x, poligono[0].y);
+        } else {
+            // Desenha as linhas do polígono
+            for (int i = 0; i < poligono.size() - 1; i++) {
+                painter.drawLine(poligono[i].x, poligono[i].y, poligono[i + 1].x, poligono[i + 1].y);
+            }
+            // Fecha o polígono, se houver pelo menos 3 pontos
+            if (poligono.size() >= 3) {
+                painter.drawLine(poligono.last().x, poligono.last().y, poligono.first().x, poligono.first().y);
+            }
 
-    if (objetos.size() == 1){
-        painter.drawPoint(objetos[0].x, objetos[0].y);
-    }
-
-    for (int i = 0; i < objetos.size() - 1; ++i) {
-        painter.drawLine(objetos[i].x, objetos[i].y, objetos[i + 1].x, objetos[i + 1].y);
-    }
-
-    // Fecha o polígono, se houver pelo menos 2 pontos
-    if (objetos.size() >= 3) {
-        painter.drawLine(objetos.last().x, objetos.last().y, objetos.first().x, objetos.first().y);
+        }
     }
 }

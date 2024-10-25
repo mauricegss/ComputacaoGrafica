@@ -1,23 +1,23 @@
-#ifndef MYWIDGET_H
+#ifndef MYWIDGET_H // Defina uma macro de inclusão
 #define MYWIDGET_H
 
+#include "Matriz.h"
 #include <QWidget>
-#include <QVector>
-#include "Pontos.h"
+#include <QPainter>
 
 class MyWidget : public QWidget {
     Q_OBJECT
 
 public:
-    MyWidget(QWidget *parent = nullptr);
-    void setObjetos(const QVector<Pontos> &objetos); // Método para definir os pontos a serem desenhados
+    explicit MyWidget(QWidget *parent = nullptr);
+    void adicionarObjeto(const QVector<Pontos> &novosObjetos); // Adiciona um novo polígono
 
 protected:
-    void paintEvent(QPaintEvent *event) override; // Método de evento de pintura
+    void paintEvent(QPaintEvent *event) override;
 
 private:
-    void Desenhar(QPainter &painter); // Método para desenhar
-    QVector<Pontos> objetos; // Armazena os pontos
+    QVector<QVector<Pontos>> objetos; // Vetor de polígonos
+    void Desenhar(QPainter &painter); // Função para desenhar os objetos
 };
 
 #endif // MYWIDGET_H
