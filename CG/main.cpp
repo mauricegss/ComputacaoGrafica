@@ -14,16 +14,8 @@ int main(int argc, char *argv[]) {
     QVector<Pontos> quad1 = { {100, 100}, {200,100}, {200,200}, {100,200} };
     myWidget.adicionarObjeto(quad1);
 
-    QVector<Pontos> quad2 = { {100, 100}, {200,100}, {200,200}, {100,200} };
-    escalonar(quad2,2,2);
-    myWidget.adicionarObjeto(quad2);
-
-    rotacionar(quad2, 0.785398);
-    myWidget.adicionarObjeto(quad2);
-
     myWidget.setWindowTitle("Computação Gráfica");
-    myWidget.resize(300,300);
+    myWidget.resize(1000,800);
 
     return app.exec();
 }
-

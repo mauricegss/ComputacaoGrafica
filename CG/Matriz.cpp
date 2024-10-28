@@ -3,6 +3,8 @@
 void centroGeometrico(QVector<Pontos>& objeto, double& xsave, double& ysave){
 
     double area = 0.0;
+    xsave = 0;
+    ysave = 0;
     for (int i = 0; i < objeto.size(); i++) {
         int j = (i + 1) % objeto.size();
         double save = objeto[i].x * objeto[j].y - objeto[j].x * objeto[i].y;
