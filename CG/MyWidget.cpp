@@ -1,4 +1,5 @@
 #include "MyWidget.h"
+#include "Delay.h"
 #include <QPushButton>
 
 MyWidget::MyWidget(QWidget *parent) : QWidget(parent) {
@@ -6,9 +7,9 @@ MyWidget::MyWidget(QWidget *parent) : QWidget(parent) {
     QPushButton *button2 = new QPushButton("Transladar", this);
     QPushButton *button3 = new QPushButton("Escalonar", this);
 
-    button1->setGeometry(QRect(QPoint(10, 750), QSize(100, 30)));
-    button2->setGeometry(QRect(QPoint(120, 750), QSize(100, 30)));
-    button3->setGeometry(QRect(QPoint(230, 750), QSize(100, 30)));
+    button1->setGeometry(QRect(QPoint(10, 10), QSize(100, 30)));
+    button2->setGeometry(QRect(QPoint(120, 10), QSize(100, 30)));
+    button3->setGeometry(QRect(QPoint(230, 10), QSize(100, 30)));
 
     connect(button1, &QPushButton::clicked, this, &MyWidget::onButtonClicked1);
     connect(button2, &QPushButton::clicked, this, &MyWidget::onButtonClicked2);
@@ -43,17 +44,25 @@ void MyWidget::Desenhar(QPainter &painter) {
 }
 
 void MyWidget::onButtonClicked1() {
-    rotacionar(objetos.last(), 0.785398);
-    update();
-
+    for(int i=0; i<10;i++){
+        rotacionar(objetos.last(), 0.0785398);
+        delay(10);
+        update();
+    }
 }
 
 void MyWidget::onButtonClicked2() {
-    transladar(objetos.last(), 10, 10);
-    update();
+    for(int i=0; i<10;i++){
+        transladar(objetos.last(), 1, 1);
+        delay(10);
+        update();
+    }
 }
 
 void MyWidget::onButtonClicked3() {
-    escalonar(objetos.last(), 2, 2);
-    update();
+    for(int i=0; i<10;i++){
+        escalonar(objetos.last(), 1.04, 1.04);
+        delay(10);
+        update();
+    }
 }

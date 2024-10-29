@@ -1,8 +1,5 @@
 #include <QApplication>
-#include <QWidget>
-#include <QVector>
 #include "MyWidget.h"
-#include "Pontos.h"
 #include "Matriz.h"
 
 int main(int argc, char *argv[]) {
