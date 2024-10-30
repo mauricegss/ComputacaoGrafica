@@ -1,7 +1,6 @@
 #include "Matriz.h"
 
-void centroGeometrico(QVector<Pontos>& objeto, double& xsave, double& ysave){
-
+void centroGeometrico(QVector<Pontos>& objeto, double& xsave, double& ysave) {
     double area = 0.0;
     xsave = 0;
     ysave = 0;
@@ -15,50 +14,54 @@ void centroGeometrico(QVector<Pontos>& objeto, double& xsave, double& ysave){
     area *= 0.5;
     xsave /= (6.0 * area);
     ysave /= (6.0 * area);
-
 }
 
-void transladar(QVector<Pontos>& objeto, double X, double Y) {
-    for (int i = 0; i < objeto.size(); i++) { // Corrigido para percorrer todos os pontos
-        objeto[i].x += X; // Translada em X
-        objeto[i].y += Y; // Translada em Y
+void aplicarMatriz(QVector<Pontos>& objeto, const QVector<QVector<double>>& matriz) {
+    for (auto& ponto : objeto) {
+        double x = ponto.x;
+        double y = ponto.y;
+        ponto.x = matriz[0][0] * x + matriz[0][1] * y + matriz[0][2];
+        ponto.y = matriz[1][0] * x + matriz[1][1] * y + matriz[1][2];
     }
 }
 
-void escalonar(QVector<Pontos>& objeto, double X, double Y) {
+void transladar(QVector<Pontos>& objeto, double dx, double dy) {
+    QVector<QVector<double>> matriz = {
+        {1, 0, dx},
+        {0, 1, dy},
+        {0, 0, 1}
+    };
+    aplicarMatriz(objeto, matriz);
+}
 
-    double xsave;
-    double ysave;
+void escalonar(QVector<Pontos>& objeto, double sx, double sy) {
+    double xsave, ysave;
     centroGeometrico(objeto, xsave, ysave);
-
     transladar(objeto, -xsave, -ysave);
 
-    for (int i = 0; i < objeto.size(); i++) {
-        objeto[i].x *= X;
-        objeto[i].y *= Y;
-    }
+    QVector<QVector<double>> matriz = {
+        {sx, 0, 0},
+        {0, sy, 0},
+        {0, 0, 1}
+    };
+    aplicarMatriz(objeto, matriz);
 
     transladar(objeto, xsave, ysave);
-
 }
 
-
-void rotacionar(QVector<Pontos>& objeto, double X){
-
-    double save;
-    double xsave;
-    double ysave;
+void rotacionar(QVector<Pontos>& objeto, double angulo) {
+    double xsave, ysave;
     centroGeometrico(objeto, xsave, ysave);
-
     transladar(objeto, -xsave, -ysave);
 
-    for(int i=0;i<objeto.size();i++){
-        save = objeto[i].x;
-        objeto[i].x = objeto[i].x*cos(X) - objeto[i].y*sin(X);
-        objeto[i].y = save*sin(X) + objeto[i].y*cos(X);
-
-    }
+    double cosAngulo = cos(angulo);
+    double sinAngulo = sin(angulo);
+    QVector<QVector<double>> matriz = {
+        {cosAngulo, -sinAngulo, 0},
+        {sinAngulo, cosAngulo, 0},
+        {0, 0, 1}
+    };
+    aplicarMatriz(objeto, matriz);
 
     transladar(objeto, xsave, ysave);
-
 }
