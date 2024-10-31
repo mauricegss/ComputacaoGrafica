@@ -19,6 +19,9 @@ private slots:
     void onButtonClicked1();
     void onButtonClicked2();
     void onButtonClicked3();
+    void onButtonClicked4();
+    void onButtonClicked5();
+    void onButtonClicked6();
 
 private:
     QVector<QVector<Pontos>> objetos;
