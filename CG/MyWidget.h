@@ -10,7 +10,7 @@ class MyWidget : public QWidget {
 
 public:
     explicit MyWidget(QWidget *parent = nullptr);
-    void adicionarObjeto(const QVector<Pontos> &novosObjetos);
+    void adicionarObjeto(const QVector<Matriz> &novosObjetos);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -25,7 +25,11 @@ private slots:
     void seletor(int index);
 
 private:
-    QVector<QVector<Pontos>> objetos;
+    int atual = 0;
+    QVector<QVector<Matriz>> objetos;
+    void rotacionar(Matriz& objeto, double angulo);
+    void transladar(Matriz& objeto, double dx, double dy);
+    void escalonar(Matriz& objeto, double sx, double sy);
     void Desenhar(QPainter &painter);
 };
 
