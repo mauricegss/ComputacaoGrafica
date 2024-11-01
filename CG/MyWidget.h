@@ -25,11 +25,7 @@ private slots:
     void seletor(int index);
 
 private:
-    int atual = 0;
     QVector<QVector<Matriz>> objetos;
-    void rotacionar(Matriz& objeto, double angulo);
-    void transladar(Matriz& objeto, double dx, double dy);
-    void escalonar(Matriz& objeto, double sx, double sy);
     void Desenhar(QPainter &painter);
 };
 
