@@ -16,7 +16,7 @@ CXX           = g++
 DEFINES       = -DUNICODE -D_UNICODE -DWIN32 -DMINGW_HAS_SECURE_API=1 -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
 CFLAGS        = -fno-keep-inline-dllexport -g -Wall -Wextra -Wextra $(DEFINES)
 CXXFLAGS      = -fno-keep-inline-dllexport -g -std=gnu++1z -Wall -Wextra -Wextra -fexceptions -mthreads $(DEFINES)
-INCPATH       = -I../../../CG -I. -IC:/Qt/6.8.0/mingw_64/include -IC:/Qt/6.8.0/mingw_64/include/QtWidgets -IC:/Qt/6.8.0/mingw_64/include/QtGui -IC:/Qt/6.8.0/mingw_64/include/QtCore -Idebug -I. -I/include -IC:/Qt/6.8.0/mingw_64/mkspecs/win32-g++ 
+INCPATH       = -I../../../Fé -I. -IC:/Qt/6.8.0/mingw_64/include -IC:/Qt/6.8.0/mingw_64/include/QtWidgets -IC:/Qt/6.8.0/mingw_64/include/QtGui -IC:/Qt/6.8.0/mingw_64/include/QtCore -Idebug -I. -I/include -IC:/Qt/6.8.0/mingw_64/mkspecs/win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-subsystem,windows -mthreads
 LIBS        =        C:\Qt\6.8.0\mingw_64\lib\libQt6Widgets.a C:\Qt\6.8.0\mingw_64\lib\libQt6Gui.a C:\Qt\6.8.0\mingw_64\lib\libQt6Core.a -lmingw32 C:\Qt\6.8.0\mingw_64\lib\libQt6EntryPoint.a -lshell32  
@@ -319,9 +319,33 @@ debug/moc_MyWidget.cpp: ../../MyWidget.h \
 		C:/Qt/6.8.0/mingw_64/include/QtGui/qpainter.h \
 		C:/Qt/6.8.0/mingw_64/include/QtGui/qtextoption.h \
 		C:/Qt/6.8.0/mingw_64/include/QtGui/qpen.h \
+		../../Delay.h \
+		C:/Qt/6.8.0/mingw_64/include/QtCore/QTime \
+		C:/Qt/6.8.0/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.8.0/mingw_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.8.0/mingw_64/include/QtCore/QCoreApplication \
+		C:/Qt/6.8.0/mingw_64/include/QtCore/QEventLoop \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/QPushButton \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qpushbutton.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/QComboBox \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qcombobox.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qstyleoption.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		C:/Qt/6.8.0/mingw_64/include/QtGui/qvalidator.h \
+		C:/Qt/6.8.0/mingw_64/include/QtCore/qregularexpression.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qslider.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qabstractslider.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qstyle.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qtabbar.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qtabwidget.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qrubberband.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qframe.h \
+		C:/Qt/6.8.0/mingw_64/include/QtCore/qabstractitemmodel.h \
 		debug/moc_predefs.h \
 		C:/Qt/6.8.0/mingw_64/bin/moc.exe
-	C:\Qt\6.8.0\mingw_64\bin\moc.exe $(DEFINES) --include C:/GitHub/ComputacaoGrafica/CG/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/debug/moc_predefs.h -IC:/Qt/6.8.0/mingw_64/mkspecs/win32-g++ -IC:/GitHub/ComputacaoGrafica/CG -IC:/Qt/6.8.0/mingw_64/include -IC:/Qt/6.8.0/mingw_64/include/QtWidgets -IC:/Qt/6.8.0/mingw_64/include/QtGui -IC:/Qt/6.8.0/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IC:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\MyWidget.h -o debug\moc_MyWidget.cpp
+	C:\Qt\6.8.0\mingw_64\bin\moc.exe $(DEFINES) --include C:/GitHub/ComputacaoGrafica/Fé/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/debug/moc_predefs.h -IC:/Qt/6.8.0/mingw_64/mkspecs/win32-g++ -IC:/GitHub/ComputacaoGrafica/Fé -IC:/Qt/6.8.0/mingw_64/include -IC:/Qt/6.8.0/mingw_64/include/QtWidgets -IC:/Qt/6.8.0/mingw_64/include/QtGui -IC:/Qt/6.8.0/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IC:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\MyWidget.h -o debug\moc_MyWidget.cpp
 
 debug/moc_mainwindow.cpp: ../../mainwindow.h \
 		C:/Qt/6.8.0/mingw_64/include/QtWidgets/QMainWindow \
@@ -517,7 +541,7 @@ debug/moc_mainwindow.cpp: ../../mainwindow.h \
 		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qtabwidget.h \
 		debug/moc_predefs.h \
 		C:/Qt/6.8.0/mingw_64/bin/moc.exe
-	C:\Qt\6.8.0\mingw_64\bin\moc.exe $(DEFINES) --include C:/GitHub/ComputacaoGrafica/CG/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/debug/moc_predefs.h -IC:/Qt/6.8.0/mingw_64/mkspecs/win32-g++ -IC:/GitHub/ComputacaoGrafica/CG -IC:/Qt/6.8.0/mingw_64/include -IC:/Qt/6.8.0/mingw_64/include/QtWidgets -IC:/Qt/6.8.0/mingw_64/include/QtGui -IC:/Qt/6.8.0/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IC:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\mainwindow.h -o debug\moc_mainwindow.cpp
+	C:\Qt\6.8.0\mingw_64\bin\moc.exe $(DEFINES) --include C:/GitHub/ComputacaoGrafica/Fé/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/debug/moc_predefs.h -IC:/Qt/6.8.0/mingw_64/mkspecs/win32-g++ -IC:/GitHub/ComputacaoGrafica/Fé -IC:/Qt/6.8.0/mingw_64/include -IC:/Qt/6.8.0/mingw_64/include/QtWidgets -IC:/Qt/6.8.0/mingw_64/include/QtGui -IC:/Qt/6.8.0/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IC:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\mainwindow.h -o debug\moc_mainwindow.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -1189,7 +1213,31 @@ debug/main.o: ../../main.cpp C:/Qt/6.8.0/mingw_64/include/QtWidgets/QApplication
 		C:/Qt/6.8.0/mingw_64/include/QtGui/QPainter \
 		C:/Qt/6.8.0/mingw_64/include/QtGui/qpainter.h \
 		C:/Qt/6.8.0/mingw_64/include/QtGui/qtextoption.h \
-		C:/Qt/6.8.0/mingw_64/include/QtGui/qpen.h
+		C:/Qt/6.8.0/mingw_64/include/QtGui/qpen.h \
+		../../Delay.h \
+		C:/Qt/6.8.0/mingw_64/include/QtCore/QTime \
+		C:/Qt/6.8.0/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.8.0/mingw_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.8.0/mingw_64/include/QtCore/QCoreApplication \
+		C:/Qt/6.8.0/mingw_64/include/QtCore/QEventLoop \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/QPushButton \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qpushbutton.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/QComboBox \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qcombobox.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qstyleoption.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		C:/Qt/6.8.0/mingw_64/include/QtGui/qvalidator.h \
+		C:/Qt/6.8.0/mingw_64/include/QtCore/qregularexpression.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qslider.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qabstractslider.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qstyle.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qtabbar.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qtabwidget.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qrubberband.h \
+		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qframe.h \
+		C:/Qt/6.8.0/mingw_64/include/QtCore/qabstractitemmodel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\..\main.cpp
 
 debug/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
@@ -1384,16 +1432,7 @@ debug/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		C:/Qt/6.8.0/mingw_64/include/QtCore/qlocale.h \
 		C:/Qt/6.8.0/mingw_64/include/QtGui/qguiapplication_platform.h \
 		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qtabwidget.h \
-		ui_mainwindow.h \
-		C:/Qt/6.8.0/mingw_64/include/QtCore/QVariant \
-		C:/Qt/6.8.0/mingw_64/include/QtWidgets/QApplication \
-		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qapplication.h \
-		C:/Qt/6.8.0/mingw_64/include/QtWidgets/QMenuBar \
-		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qmenubar.h \
-		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qmenu.h \
-		C:/Qt/6.8.0/mingw_64/include/QtWidgets/QStatusBar \
-		C:/Qt/6.8.0/mingw_64/include/QtWidgets/qstatusbar.h \
-		C:/Qt/6.8.0/mingw_64/include/QtWidgets/QWidget
+		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o ..\..\mainwindow.cpp
 
 debug/moc_MyWidget.o: debug/moc_MyWidget.cpp 
