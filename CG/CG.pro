@@ -11,14 +11,12 @@ CONFIG += c++17
 SOURCES += \
     Delay.cpp \
     Matriz.cpp \
-    MyWidget.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     Delay.h \
     Matriz.h \
-    MyWidget.h \
     mainwindow.h
 
 FORMS += \
