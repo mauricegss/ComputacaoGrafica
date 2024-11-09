@@ -27,17 +27,17 @@ void transladar(Matriz& objeto, double dx, double dy) {
     };
 
     // Multiplica a matriz do objeto pela matriz de translação
-    objeto.matriz = multiplicarMatrizes(matrizTranslacao, objeto.matriz);
+    objeto.normalizada = multiplicarMatrizes(matrizTranslacao, objeto.normalizada);
 }
 
 void escalonar(Matriz& objeto, double sx, double sy) {
 
     // Calcula o centro geométrico
     double cx = 0, cy = 0;
-    int numPontos = objeto.matriz[0].size();
+    int numPontos = objeto.normalizada[0].size();
     for (int i = 0; i < numPontos; ++i) {
-        cx += objeto.matriz[0][i];
-        cy += objeto.matriz[1][i];
+        cx += objeto.normalizada[0][i];
+        cy += objeto.normalizada[1][i];
     }
     cx /= numPontos;
     cy /= numPontos;
@@ -50,17 +50,18 @@ void escalonar(Matriz& objeto, double sx, double sy) {
     };
 
     // Multiplica a matriz do objeto pela matriz de escalonamento
-    objeto.matriz = multiplicarMatrizes(matrizEscalonamento, objeto.matriz);
+    objeto.normalizada = multiplicarMatrizes(matrizEscalonamento, objeto.normalizada);
 }
 
 void rotacionar(Matriz& objeto, double angulo) {
 
+    angulo = angulo * M_PI /180.0;
     // Calcula o centro geométrico
     double cx = 0, cy = 0;
-    int numPontos = objeto.matriz[0].size();
+    int numPontos = objeto.normalizada[0].size();
     for (int i = 0; i < numPontos; ++i) {
-        cx += objeto.matriz[0][i];
-        cy += objeto.matriz[1][i];
+        cx += objeto.normalizada[0][i];
+        cy += objeto.normalizada[1][i];
     }
     cx /= numPontos;
     cy /= numPontos;
@@ -75,5 +76,5 @@ void rotacionar(Matriz& objeto, double angulo) {
     };
 
     // Multiplica a matriz do objeto pela matriz de rotação
-    objeto.matriz = multiplicarMatrizes(matrizRotacao, objeto.matriz);
+    objeto.normalizada = multiplicarMatrizes(matrizRotacao, objeto.normalizada);
 }
