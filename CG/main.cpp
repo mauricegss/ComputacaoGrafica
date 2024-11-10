@@ -5,7 +5,6 @@
 QVector<QPair<double, double>> vpPontos = { {50,50}, {400, 50}, {400, 400}, {50, 400} };
 Matriz vp(vpPontos);
 
-
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
@@ -24,12 +23,14 @@ int main(int argc, char *argv[]) {
     tri1.normalizada = tri1.normalizar(tri1.matriz, vp);
     mainWindow.adicionarObjeto(tri1);
 
-    QVector<QPair<double, double>> ret1Pontos = { {100, 400}, {400, 400} };
+    QVector<QPair<double, double>> ret1Pontos = { {100, 400}, {400, 400}};
     Matriz ret1(ret1Pontos, "Linha");
+    ret1.normalizada = ret1.normalizar(ret1.matriz, vp);
     mainWindow.adicionarObjeto(ret1);
 
     mainWindow.setWindowTitle("Computação Gráfica");
     mainWindow.atualizarDisplayMatriz();
+    mainWindow.atualizarDisplayNormalizada();
     mainWindow.showMaximized();
 
     return app.exec();

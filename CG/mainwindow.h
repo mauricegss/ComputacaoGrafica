@@ -23,6 +23,7 @@ public:
     ~MainWindow();
     void adicionarObjeto(const Matriz& novoObjeto);
     void atualizarDisplayMatriz(); // Atualiza o display com a matriz do objeto
+    void atualizarDisplayNormalizada();
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -31,6 +32,7 @@ private slots:
     void onButtonClicked1();
     void onButtonClicked2();
     void onButtonClicked3();
+    void onButtonClicked4();
     void seletor(int index);
 
 private:
@@ -42,10 +44,12 @@ private:
     QPushButton *button1;
     QPushButton *button2;
     QPushButton *button3;
+    QPushButton *button4;
     QComboBox *menu;
 
     // Display para exibir a matriz do objeto selecionado
     QTextEdit *matrizDisplay;
+    QTextEdit *normalizadaDisplay;
 };
 
 #endif // MAINWINDOW_H
