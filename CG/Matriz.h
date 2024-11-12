@@ -37,14 +37,21 @@ public:
         QVector<QVector<double>> resultado;
         resultado.resize(3);
 
+        double xwMin = viewPort.matriz[0][0];
+        double xwMax = viewPort.matriz[0][1];
+        double ywMin = viewPort.matriz[1][0];
+        double ywMax = viewPort.matriz[1][2];
+        double vpmax = 600.0;
+        double vpmin = 0.0;
+
         for (int i = 0; i < 3; ++i) {
             resultado[i].resize(numPontos);
         }
 
         // Preenche as coordenadas x, y e os 1's aplicando a transformação de normalização
         for (int i = 0; i < numPontos; ++i) {
-            resultado[0][i] = ((matriz[0][i] - viewPort.matriz[0][0]) / (viewPort.matriz[0][1] - viewPort.matriz[0][0])) * (600 - 0);
-            resultado[1][i] = ((1 - (matriz[1][i] - viewPort.matriz[1][0]) / (viewPort.matriz[1][2] - viewPort.matriz[1][0]))) * (600 - 0);
+            resultado[0][i] = ((matriz[0][i] - xwMin) / (xwMax - xwMin)) * (vpmax - vpmin);
+            resultado[1][i] = ((1 - (matriz[1][i] - ywMin) / (ywMax - ywMin))) * (vpmax - vpmin);
             resultado[2][i] = 1.0; // linha de 1's
         }
 

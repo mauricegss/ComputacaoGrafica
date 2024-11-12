@@ -2,8 +2,9 @@
 #include "mainwindow.h"
 #include "Matriz.h"
 
-QVector<QPair<double, double>> vpPontos = { {50,50}, {400, 50}, {400, 400}, {50, 400} };
-Matriz vp(vpPontos);
+QVector<QPair<double, double>> vpPontos = { {0,0}, {600, 0}, {600, 600}, {0, 600} };
+Matriz vp(vpPontos, "window");
+
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
@@ -11,6 +12,7 @@ int main(int argc, char *argv[]) {
     MainWindow mainWindow;
 
     // Inicializando pontos diretamente como pares
+    vp.normalizada = vp.matriz;
     mainWindow.adicionarObjeto(vp);
 
     QVector<QPair<double, double>> quad1Pontos = { {100, 100}, {200, 100}, {200, 200}, {100, 200} };

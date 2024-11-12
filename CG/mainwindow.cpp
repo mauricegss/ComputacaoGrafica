@@ -61,16 +61,16 @@ void MainWindow::paintEvent(QPaintEvent *event) {
 }
 
 void MainWindow::Desenhar(QPainter &painter) {
-    for (const Matriz& objeto : objetos) {
-        int numPontos = objeto.normalizada[0].size();
+    for (int l = 1; l < objetos.size(); l++) {
+        int numPontos = objetos[l].normalizada[0].size();
 
         for (int i = 0; i < numPontos; ++i) {
             int j = (i + 1) % numPontos;
 
-            double x1 = objeto.normalizada[0][i];
-            double y1 = objeto.normalizada[1][i];
-            double x2 = objeto.normalizada[0][j];
-            double y2 = objeto.normalizada[1][j];
+            double x1 = objetos[l].normalizada[0][i];
+            double y1 = objetos[l].normalizada[1][i];
+            double x2 = objetos[l].normalizada[0][j];
+            double y2 = objetos[l].normalizada[1][j];
 
             painter.drawLine(QPointF(x1, y1), QPointF(x2, y2));
         }
@@ -106,42 +106,79 @@ void MainWindow::atualizarDisplayNormalizada() {
 }
 
 void MainWindow::onButtonClicked1() {
-    for (int i = 0; i < 10; i++) {
-        rotacionar(objetos[atual], 4.5);
-        delay(10);
+    if(atual == 0){
+        rotacionar(objetos[atual], 45);
+        normalizarTodos();
         update();
         atualizarDisplayMatriz();
         atualizarDisplayNormalizada();
+    }
+    else{
+        for (int i = 0; i < 10; i++) {
+            rotacionar(objetos[atual], 4.5);
+            delay(10);
+            update();
+            atualizarDisplayMatriz();
+            atualizarDisplayNormalizada();
+        }
     }
 }
 
 void MainWindow::onButtonClicked2() {
-    for (int i = 0; i < 10; i++) {
-        transladar(objetos[atual], 1, 1);
-        delay(10);
+    if(atual == 0){
+        transladar(objetos[atual], 10, 10);
+        normalizarTodos();
         update();
         atualizarDisplayMatriz();
         atualizarDisplayNormalizada();
+    }
+    else{
+        for (int i = 0; i < 10; i++) {
+            transladar(objetos[atual], 1, 1);
+            delay(10);
+            update();
+            atualizarDisplayMatriz();
+            atualizarDisplayNormalizada();
+        }
     }
 }
 
 void MainWindow::onButtonClicked3() {
-    for (int i = 0; i < 10; i++) {
-        escalonar(objetos[atual], pow(2, 1.0 / 10.0), pow(2, 1.0 / 10.0));
-        delay(10);
+    if(atual == 0){
+        escalonar(objetos[atual], 0.5, 0.5);
+        normalizarTodos();
         update();
         atualizarDisplayMatriz();
         atualizarDisplayNormalizada();
     }
+
+    else{
+        for (int i = 0; i < 10; i++) {
+            escalonar(objetos[atual], pow(2, 1.0 / 10.0), pow(2, 1.0 / 10.0));
+            delay(10);
+            update();
+            atualizarDisplayMatriz();
+            atualizarDisplayNormalizada();
+        }
+    }
 }
 
 void MainWindow::onButtonClicked4() {
-    for (int i = 0; i < 10; i++) {
-        escalonar(objetos[atual], pow(0.5, 1.0 / 10.0), pow(0.5, 1.0 / 10.0));
-        delay(10);
+    if(atual == 0){
+        escalonar(objetos[atual], 2, 2);
+        normalizarTodos();
         update();
         atualizarDisplayMatriz();
         atualizarDisplayNormalizada();
+    }
+    else{
+        for (int i = 0; i < 10; i++) {
+            escalonar(objetos[atual], pow(0.5, 1.0 / 10.0), pow(0.5, 1.0 / 10.0));
+            delay(10);
+            update();
+            atualizarDisplayMatriz();
+            atualizarDisplayNormalizada();
+        }
     }
 }
 
@@ -152,3 +189,11 @@ void MainWindow::seletor(int index) {
     atualizarDisplayMatriz();
     atualizarDisplayNormalizada();
 }
+
+void MainWindow::normalizarTodos(){
+    objetos[0].matriz = objetos[0].normalizada;
+    for(int i = 1; i < objetos.size(); i++){
+        objetos[i].normalizada = objetos[i].normalizar(objetos[i].matriz, objetos[0]);
+    }
+}
+

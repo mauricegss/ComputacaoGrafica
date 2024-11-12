@@ -34,6 +34,7 @@ private slots:
     void onButtonClicked3();
     void onButtonClicked4();
     void seletor(int index);
+    void normalizarTodos();
 
 private:
     Ui::MainWindow *ui;

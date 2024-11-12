@@ -72,6 +72,8 @@ void rotacionar(Matriz& objeto, double angulo) {
     QVector<QVector<double>> matrizRotacao = {
         {cosAng, -sinAng, cx * (1 - cosAng) + cy * sinAng},
         {sinAng, cosAng, cy * (1 - cosAng) - cx * sinAng},
+        //{cosAng, -sinAng, 0},
+        //{sinAng, cosAng, 0},
         {0, 0, 1}
     };
 
