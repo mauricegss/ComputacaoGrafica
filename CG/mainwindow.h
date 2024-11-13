@@ -6,6 +6,7 @@
 #include <QComboBox>
 #include <QPainter>
 #include <QTextEdit>
+#include <QFrame> // Adiciona o QFrame para delimitar a área de desenho
 #include "Matriz.h"
 #include "Delay.h"
 
@@ -35,11 +36,15 @@ private slots:
     void onButtonClicked4();
     void seletor(int index);
     void normalizarTodos();
+    void fazerSCN();
 
 private:
     Ui::MainWindow *ui;
     QVector<Matriz> objetos; // Vetor para armazenar cada objeto como uma única instância de Matriz
     void Desenhar(QPainter &painter);
+
+    // Novo componente de frame para a área de desenho
+    QFrame *drawingFrame;
 
     // Botões e menu
     QPushButton *button1;

@@ -31,8 +31,9 @@ public:
         }
     }
 
+
     // Método de normalização usando a matriz viewport
-    QVector<QVector<double>> normalizar(QVector<QVector<double>> matriz, Matriz viewPort) {
+    QVector<QVector<double>> normalizar(QVector<QVector<double>> matriz, Matriz viewPort, int xVpMax, int xVpMin, int yVpMax, int yVpMin) {
         int numPontos = matriz[0].size();
         QVector<QVector<double>> resultado;
         resultado.resize(3);
@@ -41,8 +42,6 @@ public:
         double xwMax = viewPort.matriz[0][1];
         double ywMin = viewPort.matriz[1][0];
         double ywMax = viewPort.matriz[1][2];
-        double vpmax = 600.0;
-        double vpmin = 0.0;
 
         for (int i = 0; i < 3; ++i) {
             resultado[i].resize(numPontos);
@@ -50,8 +49,8 @@ public:
 
         // Preenche as coordenadas x, y e os 1's aplicando a transformação de normalização
         for (int i = 0; i < numPontos; ++i) {
-            resultado[0][i] = ((matriz[0][i] - xwMin) / (xwMax - xwMin)) * (vpmax - vpmin);
-            resultado[1][i] = ((1 - (matriz[1][i] - ywMin) / (ywMax - ywMin))) * (vpmax - vpmin);
+            resultado[0][i] = ((matriz[0][i] - xwMin) / (xwMax - xwMin)) * (xVpMax - xVpMin);
+            resultado[1][i] = ((1 - (matriz[1][i] - ywMin) / (ywMax - ywMin))) * (yVpMax - yVpMin);
             resultado[2][i] = 1.0; // linha de 1's
         }
 
@@ -64,5 +63,7 @@ QVector<QVector<double>> multiplicarMatrizes(const QVector<QVector<double>>& A, 
 void transladar(Matriz& objeto, double dx, double dy);
 void escalonar(Matriz& objeto, double sx, double sy);
 void rotacionar(Matriz& objeto, double angulo);
+void centralizarTudo(QVector<Matriz>& objetos);
+double acharAnguloVup(Matriz& objeto, int cx, int cy);
 
 #endif // MATRIZ_H

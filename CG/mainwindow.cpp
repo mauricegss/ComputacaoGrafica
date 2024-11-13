@@ -1,11 +1,21 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "Matriz.h"
 
 int atual;
+int XMAX = 610; //coordenadas viewport
+int XMIN = 50;
+int YMAX = 610;
+int YMIN = 50;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
+
+    // Frame de desenho
+    drawingFrame = new QFrame(this);
+    drawingFrame->setGeometry(XMIN, YMIN, XMAX, YMAX); // Define a posição e o tamanho da área de desenho
+    drawingFrame->setFrameShape(QFrame::Box);     // Adiciona uma borda para indicar a área de desenho
 
     // Display .matriz
     matrizDisplay = new QTextEdit(this);
@@ -21,15 +31,15 @@ MainWindow::MainWindow(QWidget *parent)
     menu = new QComboBox(this);
     menu->setGeometry(220, 10, 100, 30);  // Posição e tamanho da combo box
 
-    // Botões de operações (direto na MainWindow)
+    // Botões de operações
     button1 = new QPushButton("Rotacionar", this);
     button2 = new QPushButton("Transladar", this);
     button3 = new QPushButton("Escalonar (+)", this);
     button4 = new QPushButton("Escalonar (-)", this);
     button1->setGeometry(330, 10, 80, 30);  // Posição e tamanho do botão Rotacionar
     button2->setGeometry(420, 10, 80, 30);  // Posição e tamanho do botão Transladar
-    button3->setGeometry(510, 10, 80, 30);  // Posição e tamanho do botão Escalonar
-    button4->setGeometry(600, 10, 80, 30);  // Posição e tamanho do botão Escalonar
+    button3->setGeometry(510, 10, 80, 30);  // Posição e tamanho do botão Escalonar (+)
+    button4->setGeometry(600, 10, 80, 30);  // Posição e tamanho do botão Escalonar (-)
 
     // Conecta os slots e sinais dos botões e combo box
     connect(button1, &QPushButton::clicked, this, &MainWindow::onButtonClicked1);
@@ -53,27 +63,32 @@ void MainWindow::adicionarObjeto(const Matriz& novoObjeto) {
     update();
 }
 
-
 void MainWindow::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event);
     QPainter painter(this);
+
+    // Define um recorte de área de desenho para o frame
+    painter.setClipRect(drawingFrame->geometry());
     Desenhar(painter);
 }
 
 void MainWindow::Desenhar(QPainter &painter) {
-    for (int l = 1; l < objetos.size(); l++) {
+    QVector<QVector<double>> objetoAtual;
+    for (int l = 0; l < objetos.size(); l++) {
         int numPontos = objetos[l].normalizada[0].size();
 
         for (int i = 0; i < numPontos; ++i) {
             int j = (i + 1) % numPontos;
-
-            double x1 = objetos[l].normalizada[0][i];
-            double y1 = objetos[l].normalizada[1][i];
-            double x2 = objetos[l].normalizada[0][j];
-            double y2 = objetos[l].normalizada[1][j];
+            objetoAtual = objetos[l].normalizar(objetos[l].normalizada, objetos[0], XMAX, XMIN, YMAX, YMIN);
+            double x1 = objetoAtual[0][i];
+            double y1 = objetoAtual[1][i];
+            double x2 = objetoAtual[0][j];
+            double y2 = objetoAtual[1][j];
 
             painter.drawLine(QPointF(x1, y1), QPointF(x2, y2));
         }
+        normalizarTodos();
+        update();
     }
 }
 
@@ -151,7 +166,6 @@ void MainWindow::onButtonClicked3() {
         atualizarDisplayMatriz();
         atualizarDisplayNormalizada();
     }
-
     else{
         for (int i = 0; i < 10; i++) {
             escalonar(objetos[atual], pow(2, 1.0 / 10.0), pow(2, 1.0 / 10.0));
@@ -183,17 +197,18 @@ void MainWindow::onButtonClicked4() {
 }
 
 void MainWindow::seletor(int index) {
-    if (index >= 0 && index < objetos.size()) {
-        atual = index;
-    }
+    atual = index;
     atualizarDisplayMatriz();
     atualizarDisplayNormalizada();
+}
+
+void MainWindow::fazerSCN(){
+    centralizarTudo(objetos);
 }
 
 void MainWindow::normalizarTodos(){
     objetos[0].matriz = objetos[0].normalizada;
     for(int i = 1; i < objetos.size(); i++){
-        objetos[i].normalizada = objetos[i].normalizar(objetos[i].matriz, objetos[0]);
+        objetos[i].normalizada = objetos[i].normalizar(objetos[i].matriz, objetos[0], XMAX, XMIN, YMAX, YMIN);
     }
 }
-
