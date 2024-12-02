@@ -36,9 +36,10 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QVector<Matriz> objetos;  // Vetor para armazenar cada objeto como uma única instância de Matriz
-    DisplayFile displayFile;
+    //QVector<Matriz> objetos; // Vetor para armazenar cada objeto como uma única instância de Matriz
+    DisplayFile objetos;
     void Desenhar(QPainter &painter);
+    void aplicarSCN();
     void atualizarDisplayMatriz();
     void resizeEvent(QResizeEvent* event);
 
@@ -48,6 +49,8 @@ private:
     QPushButton *button3;
     QComboBox *menu;
     QTextEdit *matrizDisplay;
+    QTextEdit *cloneDisplay;
+    QTextEdit *infoDisplay;
 };
 
 #endif // MAINWINDOW_H

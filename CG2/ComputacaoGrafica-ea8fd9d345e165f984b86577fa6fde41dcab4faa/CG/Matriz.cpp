@@ -1,4 +1,5 @@
 #include "Matriz.h"
+#include "displayFile.h"
 
 // Função auxiliar para multiplicar duas matrizes
 QVector<QVector<double>> multiplicarMatrizes(const QVector<QVector<double>>& A, const QVector<QVector<double>>& B) {
@@ -66,8 +67,51 @@ void rotacionar(Matriz& objeto, double angulo) {
     cy /= numPontos;
 
     // Matriz de rotação em torno do centro geométrico
-    double cosAng = cos(angulo);
-    double sinAng = sin(angulo);
+    double cosAng = cos(qDegreesToRadians(angulo));
+    double sinAng = sin(qDegreesToRadians(angulo));
+    QVector<QVector<double>> matrizRotacao = {
+        {cosAng, -sinAng, cx * (1 - cosAng) + cy * sinAng},
+        {sinAng, cosAng, cy * (1 - cosAng) - cx * sinAng},
+        {0, 0, 1}
+    };
+
+    double vx = objeto.vUp.first;
+    double vy = objeto.vUp.second;
+    objeto.vUp.first = cosAng * vx - sinAng * vy;
+    objeto.vUp.second = sinAng * vx + cosAng * vy;
+
+    // Multiplica a matriz do objeto pela matriz de rotação
+    objeto.matriz = multiplicarMatrizes(matrizRotacao, objeto.matriz);
+}
+
+void transladarClone(Matriz& objeto, double dx, double dy) {
+    // Matriz de translação
+    QVector<QVector<double>> matrizTranslacao = {
+        {1, 0, dx},
+        {0, 1, dy},
+        {0, 0, 1}
+    };
+
+    // Multiplica a matriz do objeto pela matriz de translação
+    objeto.clone = multiplicarMatrizes(matrizTranslacao, objeto.clone);
+
+}
+
+void rotacionarClone(Matriz window, Matriz& objeto, double angulo) {
+
+    // Calcula o centro geométrico
+    double cx = 0, cy = 0;
+    int numPontos = window.clone[0].size();
+    for (int i = 0; i < numPontos; ++i) {
+        cx += window.clone[0][i];
+        cy += window.clone[1][i];
+    }
+    cx /= numPontos;
+    cy /= numPontos;
+
+    // Matriz de rotação em torno do centro geométrico
+    double cosAng = cos(qDegreesToRadians(angulo));
+    double sinAng = sin(qDegreesToRadians(angulo));
     QVector<QVector<double>> matrizRotacao = {
         {cosAng, -sinAng, cx * (1 - cosAng) + cy * sinAng},
         {sinAng, cosAng, cy * (1 - cosAng) - cx * sinAng},
@@ -75,5 +119,5 @@ void rotacionar(Matriz& objeto, double angulo) {
     };
 
     // Multiplica a matriz do objeto pela matriz de rotação
-    objeto.matriz = multiplicarMatrizes(matrizRotacao, objeto.matriz);
+    objeto.clone = multiplicarMatrizes(matrizRotacao, objeto.clone);
 }

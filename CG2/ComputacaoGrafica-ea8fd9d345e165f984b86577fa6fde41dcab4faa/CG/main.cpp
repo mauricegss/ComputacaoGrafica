@@ -9,15 +9,22 @@ int main(int argc, char *argv[]) {
     mainWindow.show();
 
     // Inicializando pontos diretamente como pares
-    QVector<QPair<double, double>> quad1Pontos = { {100, 100}, {200, 100}, {200, 200}, {100, 200} };
-    Matriz quad1(quad1Pontos);
+    QVector<QPair<double, double>> pontos = { {100, 100}, {200, 100}, {200, 200}, {100, 200} };
+    Matriz window(pontos);
+    mainWindow.adicionarObjeto(window, "Window");
+
+    /*
+    pontos = { {100, 100}, {200, 100}, {200, 200}, {100, 200} };
+    Matriz quad1(pontos);
     mainWindow.adicionarObjeto(quad1, "Quadrado");
-    QVector<QPair<double, double>> tri1Pontos = { {300, 100}, {500, 100}, {500, 300} };
-    Matriz tri1(tri1Pontos);
+    */
+
+    pontos = { {300, 100}, {500, 100}, {500, 300} };
+    Matriz tri1(pontos);
     mainWindow.adicionarObjeto(tri1, "Triangulo");
 
-    QVector<QPair<double, double>> ret1Pontos = { {100, 400}, {400, 400} };
-    Matriz ret1(ret1Pontos);
+    pontos = { {100, 400}, {400, 400} };
+    Matriz ret1(pontos);
     mainWindow.adicionarObjeto(ret1, "Retangulo");
 
     mainWindow.setWindowTitle("Computação Gráfica");

@@ -20,7 +20,7 @@ public:
         return objetos[index];
     }
 
-    int tamanho() const {
+    int size() const {
         return objetos.size();
     }
 
@@ -28,6 +28,14 @@ public:
         if (index >= 0 && index < objetos.size()) {
             objetos[index] = objeto;
         }
+    }
+
+    Matriz& operator[](int index) {
+        return objetos[index];
+    }
+
+    const Matriz& operator[](int index) const {
+        return objetos[index];
     }
 
 private:
