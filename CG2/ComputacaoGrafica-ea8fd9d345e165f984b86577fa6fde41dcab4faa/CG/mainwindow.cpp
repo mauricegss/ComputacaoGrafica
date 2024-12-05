@@ -128,7 +128,7 @@ void MainWindow::atualizarDisplayMatriz() {
     infoTexto += "Número de pontos: " + QString::number(objetoAtual.matriz[0].size()) + "\n";
 
     // Exibindo os valores da matriz
-    infoTexto += "View Up: " + QString::number(objetos[0].vUp.first) + QString::number(objetos[0].vUp.second) + "\n";
+    infoTexto += "View Up: (" + QString::number(objetos[0].vUp.first) + ", "+ QString::number(objetos[0].vUp.second) + ")\n";
     for (int i = 0; i < objetoAtual.matriz.size(); ++i) {
         for (int j = 0; j < objetoAtual.matriz[i].size(); ++j) {
             matrizTexto += QString::number(objetoAtual.matriz[i][j], 'f', 0) + " ";

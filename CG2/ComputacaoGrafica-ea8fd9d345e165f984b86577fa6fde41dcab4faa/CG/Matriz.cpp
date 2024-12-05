@@ -81,6 +81,14 @@ void rotacionar(Matriz& objeto, double angulo) {
     objeto.vUp.first = cosAng * vx - sinAng * vy;
     objeto.vUp.second = sinAng * vx + cosAng * vy;
 
+    double magnitude = sqrt(objeto.vUp.first * objeto.vUp.first + objeto.vUp.second * objeto.vUp.second);
+    if (magnitude > 1e-9) { // Evitar divisão por zero
+        objeto.vUp.first /= magnitude;
+        objeto.vUp.second /= magnitude;
+    }
+    if (fabs(objeto.vUp.first) < 1e-6) objeto.vUp.first = 0;
+    if (fabs(objeto.vUp.second) < 1e-6) objeto.vUp.second = 0;
+
     // Multiplica a matriz do objeto pela matriz de rotação
     objeto.matriz = multiplicarMatrizes(matrizRotacao, objeto.matriz);
 }

@@ -13,7 +13,6 @@ int main(int argc, char *argv[]) {
     Matriz window(pontos);
     mainWindow.adicionarObjeto(window, "Window");
 
-
     pontos = { {100, 100}, {200, 100}, {200, 200}, {100, 200} };
     Matriz quad1(pontos);
     mainWindow.adicionarObjeto(quad1, "Quadrado");
