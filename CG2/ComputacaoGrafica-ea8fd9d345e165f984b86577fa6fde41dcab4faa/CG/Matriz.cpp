@@ -124,7 +124,7 @@ void rotacionarClone(Matriz window, Matriz& objeto, double angulo) {
 }
 
 // Método de normalização usando a matriz viewport
-QVector<QVector<double>> normalizar(QVector<QVector<double>> matriz, QVector<QVector<double>> window, int xVpMin, int xVpMax, int yVpMax, int yVpMin) {
+QVector<QVector<double>> normalizar(QVector<QVector<double>> matriz, QVector<QVector<double>> window, int xVpMax, int xVpMin, int yVpMax, int yVpMin) {
     if (matriz.size() < 2 || matriz[0].size() != matriz[1].size()) {
         qDebug() << "Erro: matriz de entrada com tamanho inválido!";
         return QVector<QVector<double>>();
