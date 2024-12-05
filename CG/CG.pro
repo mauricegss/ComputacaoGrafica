@@ -9,15 +9,16 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    Delay.cpp \
-    Matriz.cpp \
+    delay.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    matriz.cpp
 
 HEADERS += \
-    Delay.h \
-    Matriz.h \
-    mainwindow.h
+    delay.h \
+    displayfile.h \
+    mainwindow.h \
+    matriz.h
 
 FORMS += \
     mainwindow.ui

@@ -5,10 +5,11 @@
 #include <QPushButton>
 #include <QComboBox>
 #include <QPainter>
+#include "matriz.h"
+#include "delay.h"
+#include "displayfile.h"
+#include <QFrame>
 #include <QTextEdit>
-#include <QFrame> // Adiciona o QFrame para delimitar a área de desenho
-#include "Matriz.h"
-#include "Delay.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -22,10 +23,8 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void adicionarObjeto(const Matriz& novoObjeto);
-    void atualizarDisplayMatriz(); // Atualiza o display com a matriz do objeto
-    void atualizarDisplayNormalizada();
-    void fazerSCN();
+    void adicionarObjeto(const Matriz& novoObjeto, const QString& nome);
+    //void MainWindow::adicionarObjeto(const Matriz& novoObjeto, )
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -34,28 +33,26 @@ private slots:
     void onButtonClicked1();
     void onButtonClicked2();
     void onButtonClicked3();
-    void onButtonClicked4();
     void seletor(int index);
-    void normalizarTodos();
 
 private:
     Ui::MainWindow *ui;
-    QVector<Matriz> objetos; // Vetor para armazenar cada objeto como uma única instância de Matriz
+    //QVector<Matriz> objetos; // Vetor para armazenar cada objeto como uma única instância de Matriz
+    DisplayFile objetos;
     void Desenhar(QPainter &painter);
+    void aplicarSCN();
+    void atualizarDisplayMatriz();
+    void resizeEvent(QResizeEvent* event);
 
-    // Novo componente de frame para a área de desenho
-    QFrame *drawingFrame;
-
-    // Botões e menu
+    // Adicione os botões e o menu aqui, agora dentro da MainWindow
+    QFrame *viewPort;
     QPushButton *button1;
     QPushButton *button2;
     QPushButton *button3;
-    QPushButton *button4;
     QComboBox *menu;
-
-    // Display para exibir a matriz do objeto selecionado
     QTextEdit *matrizDisplay;
-    QTextEdit *normalizadaDisplay;
+    QTextEdit *cloneDisplay;
+    QTextEdit *infoDisplay;
 };
 
 #endif // MAINWINDOW_H

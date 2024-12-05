@@ -1,51 +1,33 @@
 #include <QApplication>
 #include "mainwindow.h"
-#include "Matriz.h"
-#include <QFrame>
-
-QVector<QPair<double, double>> windowPontos = { {100, 100}, {200, 100}, {200, 200}, {100, 200} };
-Matriz window(windowPontos, "window");
-
-int X2MAX = 610; //coordenadas viewport
-int X2MIN = 50;
-int Y2MAX = 610;
-int Y2MIN = 50;
+#include "matriz.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
     MainWindow mainWindow;
+    mainWindow.show();
 
     // Inicializando pontos diretamente como pares
-    //window.normalizada = window.normalizar(window.matriz, window, X2MAX, X2MIN, Y2MAX, Y2MIN);
-    window.normalizada = window.matriz;
-    mainWindow.adicionarObjeto(window);
+    QVector<QPair<double, double>> pontos = { {100, 100}, {250, 100}, {250, 250}, {100, 250} };
+    Matriz window(pontos);
+    mainWindow.adicionarObjeto(window, "Window");
 
-    QVector<QPair<double, double>> quad1Pontos = { {100, 100}, {200, 100}, {200, 200}, {100, 200} };
-    Matriz quad1(quad1Pontos, "Quadradin");
-    //quad1.normalizada = quad1.normalizar(quad1.matriz, window, X2MAX, X2MIN, Y2MAX, Y2MIN);
-    quad1.normalizada = quad1.matriz;
-    mainWindow.adicionarObjeto(quad1);
-
-    QVector<QPair<double, double>> tri1Pontos = { {300, 100}, {500, 100}, {500, 300} };
-    Matriz tri1(tri1Pontos, "Tri Retangulo");
-    //tri1.normalizada = tri1.normalizar(tri1.matriz, window, X2MAX, X2MIN, Y2MAX, Y2MIN);
-    tri1.normalizada = tri1.matriz;
-    mainWindow.adicionarObjeto(tri1);
-
-    QVector<QPair<double, double>> ret1Pontos = { {100, 400}, {400, 400}};
-    Matriz ret1(ret1Pontos, "Linha");
-    //ret1.normalizada = ret1.normalizar(ret1.matriz, window, X2MAX, X2MIN, Y2MAX, Y2MIN);
-    ret1.normalizada = ret1.matriz;
+    pontos = { {20, 120}, {90, 300} };
+    Matriz quad1(pontos);
+    mainWindow.adicionarObjeto(quad1, "Quadrado");
 
 
-    mainWindow.adicionarObjeto(ret1);
+    pontos = { {90 , 100}, {150, 250}};
+    Matriz tri1(pontos);
+    mainWindow.adicionarObjeto(tri1, "Triangulo");
+
+    pontos = { {120, 60}, {180, 80} };
+    Matriz ret1(pontos);
+    mainWindow.adicionarObjeto(ret1, "Retangulo");
 
     mainWindow.setWindowTitle("Computação Gráfica");
-    mainWindow.atualizarDisplayMatriz();
-    mainWindow.atualizarDisplayNormalizada();
-    mainWindow.show();
-    mainWindow.resize(700,700);
+    mainWindow.resize(600, 600);
 
     return app.exec();
 }
