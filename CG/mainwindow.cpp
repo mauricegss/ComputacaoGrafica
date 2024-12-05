@@ -153,12 +153,22 @@ void MainWindow::Desenhar(QPainter &painter) {
     QVector<QVector<double>> temp;
     temp.resize(3);
 
-    x1 = objetos[1].matriz[0][0];
-    y1 = objetos[1].matriz[1][0];
-    x2 = objetos[1].matriz[0][1];
-    y2 = objetos[1].matriz[1][1];
-    painter.setPen(Qt::blue);
-    painter.drawLine(QPointF(x1, y1), QPointF(x2, y2));
+    // AQUI
+    int numPontos = objetos[1].matriz[0].size();
+    if (numPontos >= 2) { // Garantir que há pelo menos dois pontos
+        painter.setPen(Qt::blue); // Cor azul para objetos[1]
+        for (int j = 0; j < numPontos; ++j) {
+            int k = (j + 1) % numPontos; // Liga o último ponto ao primeiro
+
+            x1 = objetos[1].matriz[0][j];
+            y1 = objetos[1].matriz[1][j];
+            x2 = objetos[1].matriz[0][k];
+            y2 = objetos[1].matriz[1][k];
+
+            painter.drawLine(QPointF(x1, y1), QPointF(x2, y2));
+        }
+    }
+    // AQUI
 
     for (int i = 2; i < objetos.size(); ++i) {
         int numPontos = objetos[i].matriz[0].size();
