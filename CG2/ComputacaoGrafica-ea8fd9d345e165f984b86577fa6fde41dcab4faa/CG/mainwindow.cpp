@@ -89,6 +89,8 @@ void MainWindow::Desenhar(QPainter &painter) {
             for (int w = 0; w < 3; ++w) {
                 temp[w].resize(numPontos);
             }
+            //=======================================================================================================
+            //a transformada de viewport ocorre aqui, fazer o clipping antes
             temp = normalizar(objetos[i].clone, objetos[0].clone, XMAX, XMIN, YMAX, YMIN);
             if (temp.size() < 2 || temp[0].size() != numPontos || temp[1].size() != numPontos) {
                 qDebug() << "Erro: retorno inesperado de normalizar()!";
