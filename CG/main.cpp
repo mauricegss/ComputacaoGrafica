@@ -13,6 +13,10 @@ int main(int argc, char *argv[]) {
     Matriz window(pontos);
     mainWindow.adicionarObjeto(window, "Window");
 
+    pontos = { {100, 100}, {400, 100}, {400, 400}, {100, 400}  };
+    Matriz viewPort(pontos);
+    mainWindow.adicionarObjeto(viewPort, "Viewport");
+
     pontos = { {20, 120}, {90, 300} };
     Matriz quad1(pontos);
     mainWindow.adicionarObjeto(quad1, "Quadrado");

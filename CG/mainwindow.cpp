@@ -153,13 +153,20 @@ void MainWindow::Desenhar(QPainter &painter) {
     QVector<QVector<double>> temp;
     temp.resize(3);
 
-    for (int i = 0; i < objetos.size(); ++i) {
+    x1 = objetos[1].matriz[0][0];
+    y1 = objetos[1].matriz[1][0];
+    x2 = objetos[1].matriz[0][1];
+    y2 = objetos[1].matriz[1][1];
+    painter.setPen(Qt::blue);
+    painter.drawLine(QPointF(x1, y1), QPointF(x2, y2));
+
+    for (int i = 2; i < objetos.size(); ++i) {
         int numPontos = objetos[i].matriz[0].size();
 
         for (int j = 0; j < numPontos; ++j) {
             int k = (j + 1) % numPontos;
 
-            temp = normalizar(objetos[i].clone, objetos[0].clone, XMAX, XMIN, YMAX, YMIN);
+            temp = normalizar(objetos[i].clone, objetos[0].clone, objetos[1].matriz);
 
             if (temp.size() < 2 || temp[0].size() != numPontos || temp[1].size() != numPontos) {
                 qDebug() << "Erro: retorno inesperado de normalizar()!";
