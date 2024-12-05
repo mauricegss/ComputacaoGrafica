@@ -96,6 +96,13 @@ void centralizarTudo(QVector<Matriz>& objetos) {
     double cy = 0;
     int numPontos = objetos[0].normalizada[0].size();
     double angulo;
+    double x_min = objetos[0].matriz[0][0];
+    double x_max = objetos[0].matriz[0][1];
+    double y_min = objetos[0].matriz[1][2];
+    double y_max = objetos[0].matriz[1][0];
+
+    double s_x = 2.0 / (x_max - x_min);
+    double s_y = 2.0 / (y_max - y_min);
 
     for (int i = 0; i < numPontos; ++i) {
         cx += objetos[0].normalizada[0][i];
@@ -114,7 +121,7 @@ void centralizarTudo(QVector<Matriz>& objetos) {
     }
     // escalona todos os objetos para centralizar
     for (int i = 0; i < objetos.size(); ++i) {
-        escalonar(objetos[i], -1,1);
+        escalonar(objetos[i], s_x,s_y);
     }
 }
 

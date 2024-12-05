@@ -25,6 +25,7 @@ public:
     void adicionarObjeto(const Matriz& novoObjeto);
     void atualizarDisplayMatriz(); // Atualiza o display com a matriz do objeto
     void atualizarDisplayNormalizada();
+    void fazerSCN();
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -36,7 +37,6 @@ private slots:
     void onButtonClicked4();
     void seletor(int index);
     void normalizarTodos();
-    void fazerSCN();
 
 private:
     Ui::MainWindow *ui;

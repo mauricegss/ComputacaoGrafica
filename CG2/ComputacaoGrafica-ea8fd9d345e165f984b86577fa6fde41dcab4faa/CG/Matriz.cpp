@@ -1,4 +1,6 @@
 #include "Matriz.h"
+#include "displayFile.h"
+#include <QDebug>
 
 // Função auxiliar para multiplicar duas matrizes
 QVector<QVector<double>> multiplicarMatrizes(const QVector<QVector<double>>& A, const QVector<QVector<double>>& B) {
@@ -66,8 +68,59 @@ void rotacionar(Matriz& objeto, double angulo) {
     cy /= numPontos;
 
     // Matriz de rotação em torno do centro geométrico
-    double cosAng = cos(angulo);
-    double sinAng = sin(angulo);
+    double cosAng = cos(qDegreesToRadians(angulo));
+    double sinAng = sin(qDegreesToRadians(angulo));
+    QVector<QVector<double>> matrizRotacao = {
+        {cosAng, -sinAng, cx * (1 - cosAng) + cy * sinAng},
+        {sinAng, cosAng, cy * (1 - cosAng) - cx * sinAng},
+        {0, 0, 1}
+    };
+
+    double vx = objeto.vUp.first;
+    double vy = objeto.vUp.second;
+    objeto.vUp.first = cosAng * vx - sinAng * vy;
+    objeto.vUp.second = sinAng * vx + cosAng * vy;
+
+    double magnitude = sqrt(objeto.vUp.first * objeto.vUp.first + objeto.vUp.second * objeto.vUp.second);
+    if (magnitude > 1e-9) { // Evitar divisão por zero
+        objeto.vUp.first /= magnitude;
+        objeto.vUp.second /= magnitude;
+    }
+    if (fabs(objeto.vUp.first) < 1e-6) objeto.vUp.first = 0;
+    if (fabs(objeto.vUp.second) < 1e-6) objeto.vUp.second = 0;
+
+    // Multiplica a matriz do objeto pela matriz de rotação
+    objeto.matriz = multiplicarMatrizes(matrizRotacao, objeto.matriz);
+}
+
+void transladarClone(Matriz& objeto, double dx, double dy) {
+    // Matriz de translação
+    QVector<QVector<double>> matrizTranslacao = {
+        {1, 0, dx},
+        {0, 1, dy},
+        {0, 0, 1}
+    };
+
+    // Multiplica a matriz do objeto pela matriz de translação
+    objeto.clone = multiplicarMatrizes(matrizTranslacao, objeto.clone);
+
+}
+
+void rotacionarClone(Matriz window, Matriz& objeto, double angulo) {
+
+    // Calcula o centro geométrico
+    double cx = 0, cy = 0;
+    int numPontos = window.clone[0].size();
+    for (int i = 0; i < numPontos; ++i) {
+        cx += window.clone[0][i];
+        cy += window.clone[1][i];
+    }
+    cx /= numPontos;
+    cy /= numPontos;
+
+    // Matriz de rotação em torno do centro geométrico
+    double cosAng = cos(qDegreesToRadians(angulo));
+    double sinAng = sin(qDegreesToRadians(angulo));
     QVector<QVector<double>> matrizRotacao = {
         {cosAng, -sinAng, cx * (1 - cosAng) + cy * sinAng},
         {sinAng, cosAng, cy * (1 - cosAng) - cx * sinAng},
@@ -75,5 +128,40 @@ void rotacionar(Matriz& objeto, double angulo) {
     };
 
     // Multiplica a matriz do objeto pela matriz de rotação
-    objeto.matriz = multiplicarMatrizes(matrizRotacao, objeto.matriz);
+    objeto.clone = multiplicarMatrizes(matrizRotacao, objeto.clone);
 }
+
+// Método de normalização usando a matriz viewport
+QVector<QVector<double>> normalizar(QVector<QVector<double>> matriz, QVector<QVector<double>> window, int xVpMax, int xVpMin, int yVpMax, int yVpMin) {
+    if (matriz.size() < 2 || matriz[0].size() != matriz[1].size()) {
+        qDebug() << "Erro: matriz de entrada com tamanho inválido!";
+        return QVector<QVector<double>>();
+    }
+
+    if (window.size() < 2 || window[0].size() < 2 || window[1].size() < 3) {
+        qDebug() << "Erro: window com tamanho inválido!";
+        return QVector<QVector<double>>();
+    }
+
+    int numPontos = matriz[0].size();
+    QVector<QVector<double>> resultado(3, QVector<double>(numPontos));
+
+    double xwMin = window[0][0];
+    double xwMax = window[0][1];
+    double ywMin = window[1][0];
+    double ywMax = window[1][2];
+
+    if (xwMax == xwMin || ywMax == ywMin) {
+        qDebug() << "Erro: limites inválidos em window (divisão por zero)!";
+        return QVector<QVector<double>>();
+    }
+
+    for (int i = 0; i < numPontos; ++i) {
+        resultado[0][i] = ((matriz[0][i] - xwMin) / (xwMax - xwMin)) * (xVpMax - xVpMin);
+        resultado[1][i] = ((1 - (matriz[1][i] - ywMin) / (ywMax - ywMin))) * (yVpMax - yVpMin);
+        resultado[2][i] = 1.0; // linha de 1's
+    }
+
+    return resultado; // devolve o objeto normalizado
+}
+
