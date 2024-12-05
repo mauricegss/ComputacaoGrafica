@@ -54,7 +54,7 @@ public:
             resultado[2][i] = 1.0; // linha de 1's
         }
 
-        return resultado;
+        return resultado; //devolve o objeto nnormalizado para ser desenhada
     }
 };
 

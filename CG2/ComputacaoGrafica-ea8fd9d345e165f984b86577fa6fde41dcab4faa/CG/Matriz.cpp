@@ -1,5 +1,6 @@
 #include "Matriz.h"
 #include "displayFile.h"
+#include <QDebug>
 
 // Função auxiliar para multiplicar duas matrizes
 QVector<QVector<double>> multiplicarMatrizes(const QVector<QVector<double>>& A, const QVector<QVector<double>>& B) {
@@ -121,3 +122,38 @@ void rotacionarClone(Matriz window, Matriz& objeto, double angulo) {
     // Multiplica a matriz do objeto pela matriz de rotação
     objeto.clone = multiplicarMatrizes(matrizRotacao, objeto.clone);
 }
+
+// Método de normalização usando a matriz viewport
+QVector<QVector<double>> normalizar(QVector<QVector<double>> matriz, QVector<QVector<double>> window, int xVpMin, int xVpMax, int yVpMax, int yVpMin) {
+    if (matriz.size() < 2 || matriz[0].size() != matriz[1].size()) {
+        qDebug() << "Erro: matriz de entrada com tamanho inválido!";
+        return QVector<QVector<double>>();
+    }
+
+    if (window.size() < 2 || window[0].size() < 2 || window[1].size() < 3) {
+        qDebug() << "Erro: window com tamanho inválido!";
+        return QVector<QVector<double>>();
+    }
+
+    int numPontos = matriz[0].size();
+    QVector<QVector<double>> resultado(3, QVector<double>(numPontos));
+
+    double xwMin = window[0][0];
+    double xwMax = window[0][1];
+    double ywMin = window[1][0];
+    double ywMax = window[1][2];
+
+    if (xwMax == xwMin || ywMax == ywMin) {
+        qDebug() << "Erro: limites inválidos em window (divisão por zero)!";
+        return QVector<QVector<double>>();
+    }
+
+    for (int i = 0; i < numPontos; ++i) {
+        resultado[0][i] = ((matriz[0][i] - xwMin) / (xwMax - xwMin)) * (xVpMax - xVpMin);
+        resultado[1][i] = ((1 - (matriz[1][i] - ywMin) / (ywMax - ywMin))) * (yVpMax - yVpMin);
+        resultado[2][i] = 1.0; // linha de 1's
+    }
+
+    return resultado; // devolve o objeto normalizado
+}
+

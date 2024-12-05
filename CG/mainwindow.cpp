@@ -60,6 +60,7 @@ MainWindow::~MainWindow() {
 void MainWindow::adicionarObjeto(const Matriz& novoObjeto) {
     objetos.append(novoObjeto);  // Adiciona o objeto à lista interna
     menu->addItem(novoObjeto.nome);  // Adiciona o nome do objeto à combo box 'menu'
+    fazerSCN();
     update();
 }
 
@@ -87,7 +88,7 @@ void MainWindow::Desenhar(QPainter &painter) {
 
             painter.drawLine(QPointF(x1, y1), QPointF(x2, y2));
         }
-        normalizarTodos();
+        //normalizarTodos();
         update();
     }
 }
@@ -123,6 +124,7 @@ void MainWindow::atualizarDisplayNormalizada() {
 void MainWindow::onButtonClicked1() {
     if(atual == 0){
         rotacionar(objetos[atual], 45);
+        //fazerSCN();
         normalizarTodos();
         update();
         atualizarDisplayMatriz();
@@ -142,7 +144,8 @@ void MainWindow::onButtonClicked1() {
 void MainWindow::onButtonClicked2() {
     if(atual == 0){
         transladar(objetos[atual], 10, 10);
-        normalizarTodos();
+        fazerSCN();
+        //normalizarTodos();
         update();
         atualizarDisplayMatriz();
         atualizarDisplayNormalizada();
@@ -161,7 +164,8 @@ void MainWindow::onButtonClicked2() {
 void MainWindow::onButtonClicked3() {
     if(atual == 0){
         escalonar(objetos[atual], 0.5, 0.5);
-        normalizarTodos();
+        fazerSCN();
+        //normalizarTodos();
         update();
         atualizarDisplayMatriz();
         atualizarDisplayNormalizada();
@@ -180,7 +184,8 @@ void MainWindow::onButtonClicked3() {
 void MainWindow::onButtonClicked4() {
     if(atual == 0){
         escalonar(objetos[atual], 2, 2);
-        normalizarTodos();
+        fazerSCN();
+        //normalizarTodos();
         update();
         atualizarDisplayMatriz();
         atualizarDisplayNormalizada();

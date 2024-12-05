@@ -9,15 +9,15 @@ int main(int argc, char *argv[]) {
     mainWindow.show();
 
     // Inicializando pontos diretamente como pares
-    QVector<QPair<double, double>> pontos = { {100, 100}, {200, 100}, {200, 200}, {100, 200} };
+    QVector<QPair<double, double>> pontos = { {100, 100}, {250, 100}, {250, 250}, {100, 250} };
     Matriz window(pontos);
     mainWindow.adicionarObjeto(window, "Window");
 
-    /*
+
     pontos = { {100, 100}, {200, 100}, {200, 200}, {100, 200} };
     Matriz quad1(pontos);
     mainWindow.adicionarObjeto(quad1, "Quadrado");
-    */
+
 
     pontos = { {300, 100}, {500, 100}, {500, 300} };
     Matriz tri1(pontos);

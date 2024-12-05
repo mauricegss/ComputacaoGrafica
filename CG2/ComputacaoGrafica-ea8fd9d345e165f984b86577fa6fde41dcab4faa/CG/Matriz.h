@@ -40,5 +40,6 @@ void escalonar(Matriz& objeto, double sx, double sy);
 void rotacionar(Matriz& objeto, double angulo);
 void transladarClone(Matriz& objeto, double dx, double dy);
 void rotacionarClone(Matriz window, Matriz& objeto, double angulo);
+QVector<QVector<double>> normalizar(QVector<QVector<double>> matriz, QVector<QVector<double>> window, int xVpMax, int xVpMin, int yVpMax, int yVpMin);
 
 #endif // MATRIZ_H

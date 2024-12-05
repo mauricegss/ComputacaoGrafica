@@ -1,11 +1,22 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QFrame>
 
 int atual=0;
+int XMAX = 550; //coordenadas viewport
+int XMIN = 50;
+int YMAX = 550;
+int YMIN = 50;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
+
+    // Frame de desenho
+    viewPort = new QFrame(this);
+    viewPort ->setGeometry(XMIN, YMIN, XMAX, YMAX); // Define a posição e o tamanho da área de desenho
+    viewPort ->setFrameShape(QFrame::Box);     // Adiciona uma borda para indicar a área de desenho
+
 
     //int larguraJanela = this->width();  // Largura total da janela
     // Display .matriz
@@ -62,6 +73,12 @@ void MainWindow::paintEvent(QPaintEvent *event) {
 
 void MainWindow::Desenhar(QPainter &painter) {
     painter.translate(100,100);
+    double x1;
+    double y1;
+    double x2;
+    double y2;
+    QVector<QVector<double>> temp;
+    temp.resize(3);
     for (int i = 0; i < objetos.size(); ++i) {
         //Matriz& objeto = displayFile.getObjeto(i);
         //int numPontos = objeto.matriz[0].size();
@@ -69,20 +86,27 @@ void MainWindow::Desenhar(QPainter &painter) {
 
         for (int j = 0; j < numPontos; ++j) {
             int k = (j + 1) % numPontos;
-
-            painter.setPen(Qt::black);
+            for (int w = 0; w < 3; ++w) {
+                temp[w].resize(numPontos);
+            }
+            temp = normalizar(objetos[i].clone, objetos[0].clone, XMAX, XMIN, YMAX, YMIN);
+            if (temp.size() < 2 || temp[0].size() != numPontos || temp[1].size() != numPontos) {
+                qDebug() << "Erro: retorno inesperado de normalizar()!";
+                continue;
+            }
+            /*painter.setPen(Qt::black);
             double x1 = objetos[i].matriz[0][j];
             double y1 = objetos[i].matriz[1][j];
             double x2 = objetos[i].matriz[0][k];
             double y2 = objetos[i].matriz[1][k];
 
             painter.drawLine(QPointF(x1, y1), QPointF(x2, y2));
-
+            */
             painter.setPen(Qt::red);
-            x1 = objetos[i].clone[0][j];
-            y1 = objetos[i].clone[1][j];
-            x2 = objetos[i].clone[0][k];
-            y2 = objetos[i].clone[1][k];
+            x1 = temp[0][j];
+            y1 = temp[1][j];
+            x2 = temp[0][k];
+            y2 = temp[1][k];
             painter.drawLine(QPointF(x1, y1), QPointF(x2, y2));
 
         }

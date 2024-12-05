@@ -8,6 +8,7 @@
 #include "Matriz.h"
 #include "Delay.h"
 #include "displayfile.h"
+#include <QFrame>
 #include <QTextEdit>
 
 QT_BEGIN_NAMESPACE
@@ -44,6 +45,7 @@ private:
     void resizeEvent(QResizeEvent* event);
 
     // Adicione os botões e o menu aqui, agora dentro da MainWindow
+    QFrame *viewPort;
     QPushButton *button1;
     QPushButton *button2;
     QPushButton *button3;
