@@ -154,7 +154,7 @@ QVector<QVector<double>> normalizar(QVector<QVector<double>> matriz, QVector<QVe
 
     for (int i = 0; i < numPontos; ++i) {
         resultado[0][i] = ((matriz[0][i] - xwMin) / (xwMax - xwMin)) * (xVpMax - xVpMin);
-        resultado[1][i] = ((1 - (matriz[1][i] - ywMin) / (ywMax - ywMin))) * (yVpMax - yVpMin);
+        resultado[1][i] = ((1-(matriz[1][i] - ywMin) / (ywMax - ywMin))) * (yVpMax - yVpMin);
         resultado[2][i] = 1.0; // linha de 1's
     }
 

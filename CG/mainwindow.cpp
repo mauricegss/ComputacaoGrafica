@@ -19,10 +19,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     // Frame de desenho
-    viewPort = new QFrame(this);
+    /*viewPort = new QFrame(this);
     viewPort ->setGeometry(XMIN, YMIN, XMAX, YMAX); // Define a posição e o tamanho da área de desenho
-    viewPort ->setFrameShape(QFrame::Box);     // Adiciona uma borda para indicar a área de desenho
-
+    viewPort ->setFrameShape(QFrame::Box); */
 
     //int larguraJanela = this->width();  // Largura total da janela
     // Display .matriz
@@ -148,11 +147,12 @@ bool clipping(double &x1, double &y1, double &x2, double &y2) {
 }
 
 void MainWindow::Desenhar(QPainter &painter) {
-    painter.translate(100, 100);
+    //painter.translate(100, 100);
     double x1, y1, x2, y2;
     QVector<QVector<double>> temp;
     temp.resize(3);
 
+    // AQUI
     // AQUI
     int numPontos = objetos[1].matriz[0].size();
     if (numPontos >= 2) { // Garantir que há pelo menos dois pontos
