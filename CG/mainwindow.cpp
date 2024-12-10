@@ -231,7 +231,7 @@ void MainWindow::onButtonClicked1() {
         return;
     }
     for (int i = 0; i < 10; i++) {
-        rotacionar(objetos[atual], 4.5); // Realiza a rotação
+        rotacionar(objetos[atual], 4.5, 'x'); // Realiza a rotação
         objetos.setObjeto(atual, objetos[atual]);
         //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
         atualizarDisplayMatriz();
@@ -242,7 +242,7 @@ void MainWindow::onButtonClicked1() {
 
 void MainWindow::onButtonClicked2() {
     for(int i = 0; i < 10; i++) {
-        transladar(objetos[atual], 1, 1);
+        transladar(objetos[atual], 1, 1, 0);
         objetos.setObjeto(atual, objetos[atual]);
         //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
         delay(10);
@@ -252,7 +252,7 @@ void MainWindow::onButtonClicked2() {
 
 void MainWindow::onButtonClicked3() {
     for(int i = 0; i < 10; i++) {
-        escalonar(objetos[atual], 1.04, 1.04);
+        escalonar(objetos[atual], 0.96, 0.96, 0.96);
         objetos.setObjeto(atual, objetos[atual]);
         //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
         atualizarDisplayMatriz();
@@ -294,18 +294,20 @@ void MainWindow::aplicarSCN(){
     // Passo 1 - Translade Wc para a origem e o mundo de -Wcx e -Wcy
 
     // Calcula o centro geométrico da Window
-    double cx = 0, cy = 0;
+    double cx = 0, cy = 0, cz =0;
     int numPontos = objetos[0].matriz[0].size();
     for (int i = 0; i < numPontos; ++i) {
         cx += objetos[0].matriz[0][i];
         cy += objetos[0].matriz[1][i];
+        cz += objetos[0].matriz[2][i];
     }
     cx /= numPontos;
     cy /= numPontos;
+    cz /= numPontos;
 
     // Transalação
     for(int i = 0; i<objetos.size(); i++){
-        transladarClone(objetos[i], -cx, -cy);
+        transladarClone(objetos[i], -cx, -cy, -cz);
     }
 
     // Passo 2 - Determine vUp e o angulo vUp com Y
@@ -324,7 +326,5 @@ void MainWindow::aplicarSCN(){
     for (int i = 1; i < objetos.size(); ++i) {
         rotacionarClone(objetos[0],objetos[i], -qRadiansToDegrees(theta)); // Converta θ para graus e aplique a rotação
     }
-
-    //
 
 }

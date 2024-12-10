@@ -20,77 +20,106 @@ QVector<QVector<double>> multiplicarMatrizes(const QVector<QVector<double>>& A, 
     return resultado;
 }
 
-void transladar(Matriz& objeto, double dx, double dy) {
+void transladar(Matriz& objeto, double dx, double dy, double dz) {
     // Matriz de translação
     QVector<QVector<double>> matrizTranslacao = {
-        {1, 0, dx},
-        {0, 1, dy},
-        {0, 0, 1}
+        {1, 0, 0, dx},
+        {0, 1, 0, dy},
+        {0, 0, 1, dz},
+        {0, 0, 0, 1}
     };
 
     // Multiplica a matriz do objeto pela matriz de translação
     objeto.matriz = multiplicarMatrizes(matrizTranslacao, objeto.matriz);
 }
 
-void escalonar(Matriz& objeto, double sx, double sy) {
-
+void escalonar(Matriz& objeto, double sx, double sy, double sz) {
     // Calcula o centro geométrico
-    double cx = 0, cy = 0;
+    double cx = 0, cy = 0, cz = 0;
     int numPontos = objeto.matriz[0].size();
     for (int i = 0; i < numPontos; ++i) {
         cx += objeto.matriz[0][i];
         cy += objeto.matriz[1][i];
+        cz += objeto.matriz[2][i];
     }
     cx /= numPontos;
     cy /= numPontos;
+    cz /= numPontos;
 
     // Matriz de escalonamento em torno do centro geométrico
     QVector<QVector<double>> matrizEscalonamento = {
-        {sx, 0, cx * (1 - sx)},
-        {0, sy, cy * (1 - sy)},
-        {0, 0, 1}
+        {sx, 0, 0, 0},
+        {0, sy, 0, 0},
+        {0, 0, sz, 0},
+        {0, 0, 0, 1}
     };
 
+    transladar(objeto, -cx, -cy, -cz);
     // Multiplica a matriz do objeto pela matriz de escalonamento
     objeto.matriz = multiplicarMatrizes(matrizEscalonamento, objeto.matriz);
+    transladar(objeto, cx, cy, cz);
+
 }
 
-void rotacionar(Matriz& objeto, double angulo) {
-
+void rotacionar(Matriz& objeto, double angulo, char torno) {
     // Calcula o centro geométrico
-    double cx = 0, cy = 0;
+    double cx = 0, cy = 0, cz = 0;
     int numPontos = objeto.matriz[0].size();
     for (int i = 0; i < numPontos; ++i) {
         cx += objeto.matriz[0][i];
         cy += objeto.matriz[1][i];
+        cz += objeto.matriz[2][i];
     }
     cx /= numPontos;
     cy /= numPontos;
+    cz /= numPontos;
 
     // Matriz de rotação em torno do centro geométrico
     double cosAng = cos(qDegreesToRadians(angulo));
     double sinAng = sin(qDegreesToRadians(angulo));
-    QVector<QVector<double>> matrizRotacao = {
-        {cosAng, -sinAng, cx * (1 - cosAng) + cy * sinAng},
-        {sinAng, cosAng, cy * (1 - cosAng) - cx * sinAng},
-        {0, 0, 1}
-    };
+    QVector<QVector<double>> matrizRotacao;
+    if(torno == 'x'){
+        matrizRotacao = {
+            {1, 0, 0, 0},
+            {0, cosAng, -sinAng, 0},
+            {0, sinAng, cosAng, 0},
+            {0, 0, 0, 1}
+        };
+    } else if(torno == 'y'){
+        matrizRotacao = {
+            {cosAng, 0, sinAng, 0},
+            {0, 1, 0, 0},
+            {-sinAng, 0, cosAng, 0},
+            {0, 0, 0, 1}
+        };
+    } else if(torno == 'z'){
+        matrizRotacao = {
+            {cosAng, -sinAng, 0, 0},
+            {sinAng, cosAng, 0, 0},
+            {0, 0, 1, 0},
+            {0, 0, 0, 1}
+        };
+    }
 
     double vx = objeto.vUp.first;
     double vy = objeto.vUp.second;
     objeto.vUp.first = cosAng * vx - sinAng * vy;
     objeto.vUp.second = sinAng * vx + cosAng * vy;
 
+    transladar(objeto, -cx, -cy, -cz);
     // Multiplica a matriz do objeto pela matriz de rotação
     objeto.matriz = multiplicarMatrizes(matrizRotacao, objeto.matriz);
+    transladar(objeto, cx, cy, cz);
+
 }
 
-void transladarClone(Matriz& objeto, double dx, double dy) {
+void transladarClone(Matriz& objeto, double dx, double dy, double dz) {
     // Matriz de translação
     QVector<QVector<double>> matrizTranslacao = {
-        {1, 0, dx},
-        {0, 1, dy},
-        {0, 0, 1}
+        {1, 0,0, dx},
+        {0, 1,0, dy},
+        {0, 0, 1,dz},
+        {0, 0, 0,1}
     };
 
     // Multiplica a matriz do objeto pela matriz de translação
@@ -101,26 +130,33 @@ void transladarClone(Matriz& objeto, double dx, double dy) {
 void rotacionarClone(Matriz window, Matriz& objeto, double angulo) {
 
     // Calcula o centro geométrico
-    double cx = 0, cy = 0;
+    double cx = 0, cy = 0, cz =0;
     int numPontos = window.clone[0].size();
     for (int i = 0; i < numPontos; ++i) {
         cx += window.clone[0][i];
         cy += window.clone[1][i];
+        cz += window.clone[1][i];
     }
     cx /= numPontos;
     cy /= numPontos;
+    cz /= numPontos;
 
     // Matriz de rotação em torno do centro geométrico
     double cosAng = cos(qDegreesToRadians(angulo));
     double sinAng = sin(qDegreesToRadians(angulo));
+
     QVector<QVector<double>> matrizRotacao = {
-        {cosAng, -sinAng, cx * (1 - cosAng) + cy * sinAng},
-        {sinAng, cosAng, cy * (1 - cosAng) - cx * sinAng},
-        {0, 0, 1}
+        {cosAng, -sinAng, 0, 0},
+        {sinAng, cosAng, 0, 0},
+        {0, 0, 1, 0},
+        {0, 0, 0, 1}
     };
 
     // Multiplica a matriz do objeto pela matriz de rotação
+    transladarClone(objeto, -cx, -cy, -cz);
     objeto.clone = multiplicarMatrizes(matrizRotacao, objeto.clone);
+    transladarClone(objeto, cx, cy, cz);
+
 }
 
 // Método de normalização usando a matriz viewport

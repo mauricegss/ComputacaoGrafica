@@ -9,13 +9,22 @@ int main(int argc, char *argv[]) {
     mainWindow.show();
 
     // Inicializando pontos diretamente como pares
-    QVector<QPair<double, double>> pontos = {{100, 100}, {300, 100}, {300, 300}, {100, 300}};
+    QVector<Ponto3D> pontos = {{100, 100}, {300, 100}, {300, 300}, {100, 300}};
     Matriz window(pontos);
     mainWindow.adicionarObjeto(window, "Window");
 
     pontos = {{50, 50}, {550, 50}, {550, 550}, {50, 550}};
     Matriz viewPort(pontos);
     mainWindow.adicionarObjeto(viewPort, "Viewport");
+
+    pontos = {
+        {100,100,100}, {125,150,125}, {100,100,100},
+        {150,100,100}, {125,150,125}, {150,100,100},
+        {150,100,150}, {125,150,125}, {150,100,150},
+        {100,100,150}, {125,150,125}, {100,100,150}
+    };
+    Matriz piramide(pontos);
+    mainWindow.adicionarObjeto(piramide, "Pirâmide");
 
     // Ajustando o barco para estar dentro da window
     pontos = {

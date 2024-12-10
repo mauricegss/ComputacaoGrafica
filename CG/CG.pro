@@ -15,6 +15,7 @@ SOURCES += \
     matriz.cpp
 
 HEADERS += \
+    Structs.h \
     delay.h \
     displayfile.h \
     mainwindow.h \
