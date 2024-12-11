@@ -167,19 +167,6 @@ void MainWindow::Desenhar(QPainter &painter) {
         }
     }
     // AQUI
-    painter.setPen(Qt::red); // Definindo a cor roxa para os pontos
-    for (int i = 2; i < objetos.size(); ++i) {
-        temp = normalizar(objetos[i].clone, objetos[0].clone, objetos[1].matriz);
-
-        // Desenhando os pontos de todos os objetos (se houverem)
-        for (int j = 0; j < objetos[i].matriz[0].size(); ++j) {
-            double x = temp[0][j];
-            double y = temp[1][j];
-
-            // Desenhando o ponto como um pequeno círculo
-            painter.drawEllipse(QPointF(x, y), 3, 3); // Tamanho do ponto pode ser ajustado (3, 3)
-        }
-    }
 
     // Agora desenha os objetos (arestas e faces)
     for (int i = 2; i < objetos.size(); ++i) {
@@ -188,7 +175,7 @@ void MainWindow::Desenhar(QPainter &painter) {
         // Desenhando as faces, se existirem
         if (!objetos[i].faces.isEmpty()) {
             painter.setPen(Qt::transparent);
-            painter.setBrush(QBrush(Qt::green, Qt::SolidPattern)); // Cor para faces
+            painter.setBrush(Qt::green); // Cor para faces
 
             // Desenhando as faces
             for (const Face &face : objetos[i].faces) {
@@ -200,8 +187,11 @@ void MainWindow::Desenhar(QPainter &painter) {
                     pontosFace.append(QPointF(x, y));
                 }
 
-                // Desenha a face como um polígono
-                painter.drawPolygon(pontosFace);
+                // Aplica o clipping de polígono
+                if (clipPolygon(pontosFace)) {
+                    // Desenha a face como um polígono
+                    painter.drawPolygon(pontosFace);
+                }
             }
         }
 
@@ -226,6 +216,17 @@ void MainWindow::Desenhar(QPainter &painter) {
                 }
             }
 
+        }
+        painter.setPen(Qt::red);
+        painter.setBrush(Qt::transparent);
+        for (int j = 0; j < objetos[i].matriz[0].size(); ++j) {
+            double x = temp[0][j];
+            double y = temp[1][j];
+
+            // Desenhando o ponto como um pequeno círculo
+            if(x <= XMAX && x >= XMIN && y <= YMAX && y >= YMIN){
+                painter.drawEllipse(QPointF(x, y), 3, 3); // Tamanho do ponto pode ser ajustado (3, 3)
+            }
         }
     }
 }
@@ -365,3 +366,73 @@ void MainWindow::aplicarSCN(){
     }
 
 }
+
+bool MainWindow::clipPolygon(QVector<QPointF>& pontos) {
+    QVector<QPointF> clipped;
+    QPointF s;
+    // Clipping em cada borda da janela de visualização (esquerda, direita, cima e baixo)
+    for (int i = 0; i < 4; ++i) {
+        QVector<QPointF> newPoints;
+        if (pontos.isEmpty()) {
+            return false; // Polígono completamente eliminado
+        } else {
+            s = pontos.last();
+        }
+        for (int j = 0; j < pontos.size(); ++j) {
+            QPointF p = pontos[j];
+            if (i == 0) { // Clipping pela borda esquerda
+                if (p.x() >= XMIN) {
+                    if (s.x() < XMIN) {
+                        double y = s.y() + (p.y() - s.y()) * (XMIN - s.x()) / (p.x() - s.x());
+                        newPoints.append(QPointF(XMIN, y));
+                    }
+                    newPoints.append(p);
+                }
+                else if (s.x() >= XMIN) {
+                    double y = s.y() + (p.y() - s.y()) * (XMIN - s.x()) / (p.x() - s.x());
+                    newPoints.append(QPointF(XMIN, y));
+                }
+            } else if (i == 1) { // Clipping pela borda direita
+                if (p.x() <= XMAX) {
+                    if (s.x() > XMAX) {
+                        double y = s.y() + (p.y() - s.y()) * (XMAX - s.x()) / (p.x() - s.x());
+                        newPoints.append(QPointF(XMAX, y));
+                    }
+                    newPoints.append(p);
+                }
+                else if (s.x() <= XMAX) {
+                    double y = s.y() + (p.y() - s.y()) * (XMAX - s.x()) / (p.x() - s.x());
+                    newPoints.append(QPointF(XMAX, y));
+                }
+            } else if (i == 2) { // Clipping pela borda inferior
+                if (p.y() >= YMIN) {
+                    if (s.y() < YMIN) {
+                        double x = s.x() + (p.x() - s.x()) * (YMIN - s.y()) / (p.y() - s.y());
+                        newPoints.append(QPointF(x, YMIN));
+                    }
+                    newPoints.append(p);
+                }
+                else if (s.y() >= YMIN) {
+                    double x = s.x() + (p.x() - s.x()) * (YMIN - s.y()) / (p.y() - s.y());
+                    newPoints.append(QPointF(x, YMIN));
+                }
+            } else { // Clipping pela borda superior
+                if (p.y() <= YMAX) {
+                    if (s.y() > YMAX) {
+                        double x = s.x() + (p.x() - s.x()) * (YMAX - s.y()) / (p.y() - s.y());
+                        newPoints.append(QPointF(x, YMAX));
+                    }
+                    newPoints.append(p);
+                }
+                else if (s.y() <= YMAX) {
+                    double x = s.x() + (p.x() - s.x()) * (YMAX - s.y()) / (p.y() - s.y());
+                    newPoints.append(QPointF(x, YMAX));
+                }
+            }
+            s = p;
+        }
+        pontos = newPoints;
+    }
+    return !pontos.isEmpty();
+}
+

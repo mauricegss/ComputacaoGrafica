@@ -26,6 +26,7 @@ public:
     void adicionarObjeto(const Matriz& novoObjeto);
     //void MainWindow::adicionarObjeto(const Matriz& novoObjeto, )
 
+
 protected:
     void paintEvent(QPaintEvent *event) override;
 
@@ -43,6 +44,7 @@ private:
     void aplicarSCN();
     void atualizarDisplayMatriz();
     void resizeEvent(QResizeEvent* event);
+    bool clipPolygon(QVector<QPointF>& pontos);
 
     // Adicione os botões e o menu aqui, agora dentro da MainWindow
     QFrame *viewPort;
