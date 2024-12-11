@@ -35,11 +35,11 @@ int main(int argc, char *argv[]) {
     // Definindo as faces (índices dos pontos que formam as faces)
 
     QVector<Face> faces = {
-        Face({0, 1, 4}),  // Face 1 (triângulo)
-        Face({1, 2, 4}),  // Face 2 (triângulo)
-        Face({2, 3, 4}),  // Face 3 (triângulo)
-        Face({3, 0, 4}),  // Face 4 (triângulo)
-        Face({0, 1, 2, 3}) // Base (quadrado)
+        {0, 1, 4},  // Face 1 (triângulo)
+        {1, 2, 4},  // Face 2 (triângulo)
+        {2, 3, 4},  // Face 3 (triângulo)
+        {3, 0, 4},  // Face 4 (triângulo)
+        {0, 1, 2, 3} // Base (quadrado)
     };
 
     // Criando uma pirâmide completa (com arestas e faces)

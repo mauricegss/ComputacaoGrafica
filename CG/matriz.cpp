@@ -105,6 +105,13 @@ void rotacionar(Matriz& objeto, double angulo, char torno) {
     double vy = objeto.vUp.second;
     objeto.vUp.first = cosAng * vx - sinAng * vy;
     objeto.vUp.second = sinAng * vx + cosAng * vy;
+    double epsilon = 1e-6;
+    if (fabs(objeto.vUp.first) < epsilon) {
+        objeto.vUp.first = 0;
+    }
+    if (fabs(objeto.vUp.second) < epsilon) {
+        objeto.vUp.second = 0;
+    }
 
     transladar(objeto, -cx, -cy, -cz);
     // Multiplica a matriz do objeto pela matriz de rotação
