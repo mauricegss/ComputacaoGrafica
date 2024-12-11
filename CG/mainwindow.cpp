@@ -58,13 +58,13 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::adicionarObjeto(const Matriz& novoObjeto, const QString& nome) {
+void MainWindow::adicionarObjeto(const Matriz& novoObjeto) {
 
     objetos.adicionarObjeto(novoObjeto);
     //displayFile.adicionarObjeto(novoObjeto);
     //objetos = displayFile.getObjetos();
 
-    menu->addItem(nome);
+    menu->addItem(novoObjeto.nome);
 
     update();
 }
@@ -147,16 +147,14 @@ bool clipping(double &x1, double &y1, double &x2, double &y2) {
 }
 
 void MainWindow::Desenhar(QPainter &painter) {
-    //painter.translate(100, 100);
     double x1, y1, x2, y2;
     QVector<QVector<double>> temp;
-    temp.resize(3);
+    temp.resize(4);
 
-    // AQUI
-    // AQUI
+    // AQUI A PARTE DE DESENHAR A WINDOW
     int numPontos = objetos[1].matriz[0].size();
     if (numPontos >= 2) { // Garantir que há pelo menos dois pontos
-        painter.setPen(Qt::blue); // Cor azul para objetos[1]
+        painter.setPen(Qt::black); // Cor azul para objetos[1]
         for (int j = 0; j < numPontos; ++j) {
             int k = (j + 1) % numPontos; // Liga o último ponto ao primeiro
 
@@ -169,30 +167,65 @@ void MainWindow::Desenhar(QPainter &painter) {
         }
     }
     // AQUI
-
+    painter.setPen(Qt::red); // Definindo a cor roxa para os pontos
     for (int i = 2; i < objetos.size(); ++i) {
-        int numPontos = objetos[i].matriz[0].size();
+        temp = normalizar(objetos[i].clone, objetos[0].clone, objetos[1].matriz);
 
-        for (int j = 0; j < numPontos; ++j) {
-            int k = (j + 1) % numPontos;
+        // Desenhando os pontos de todos os objetos (se houverem)
+        for (int j = 0; j < objetos[i].matriz[0].size(); ++j) {
+            double x = temp[0][j];
+            double y = temp[1][j];
 
-            temp = normalizar(objetos[i].clone, objetos[0].clone, objetos[1].matriz);
+            // Desenhando o ponto como um pequeno círculo
+            painter.drawEllipse(QPointF(x, y), 3, 3); // Tamanho do ponto pode ser ajustado (3, 3)
+        }
+    }
 
-            if (temp.size() < 2 || temp[0].size() != numPontos || temp[1].size() != numPontos) {
-                qDebug() << "Erro: retorno inesperado de normalizar()!";
-                continue;
+    // Agora desenha os objetos (arestas e faces)
+    for (int i = 2; i < objetos.size(); ++i) {
+        temp = normalizar(objetos[i].clone, objetos[0].clone, objetos[1].matriz);
+
+        // Desenhando as faces, se existirem
+        if (!objetos[i].faces.isEmpty()) {
+            painter.setPen(Qt::transparent);
+            painter.setBrush(QBrush(Qt::green, Qt::SolidPattern)); // Cor para faces
+
+            // Desenhando as faces
+            for (const Face &face : objetos[i].faces) {
+                QVector<QPointF> pontosFace;
+
+                for (int idx : face.indices) {
+                    double x = temp[0][idx];
+                    double y = temp[1][idx];
+                    pontosFace.append(QPointF(x, y));
+                }
+
+                // Desenha a face como um polígono
+                painter.drawPolygon(pontosFace);
+            }
+        }
+
+        // Desenhando as arestas, se existirem (APÓS as faces para sobrepor)
+        if (!objetos[i].arestas.isEmpty()) {
+
+            painter.setPen(Qt::blue); // Cor para as arestas
+
+            // Desenhando as arestas
+
+            for (const Aresta &aresta : objetos[i].arestas) {
+                int p1 = aresta.p1;
+                int p2 = aresta.p2;
+
+                x1 = temp[0][p1];
+                y1 = temp[1][p1];
+                x2 = temp[0][p2];
+                y2 = temp[1][p2];
+                // Aplica o algoritmo de Cohen-Sutherland (se necessário)
+                if (clipping(x1, y1, x2, y2)) {
+                    painter.drawLine(QPointF(x1, y1), QPointF(x2, y2));
+                }
             }
 
-            x1 = temp[0][j];
-            y1 = temp[1][j];
-            x2 = temp[0][k];
-            y2 = temp[1][k];
-
-            // Aplica o algoritmo de Cohen-Sutherland
-            if (clipping(x1, y1, x2, y2)) {
-                painter.setPen(Qt::red);
-                painter.drawLine(QPointF(x1, y1), QPointF(x2, y2));
-            }
         }
     }
 }
@@ -210,7 +243,7 @@ void MainWindow::atualizarDisplayMatriz() {
     infoTexto += "Número de pontos: " + QString::number(objetoAtual.matriz[0].size()) + "\n";
 
     // Exibindo os valores da matriz
-    infoTexto += "View Up: " + QString::number(objetos[0].vUp.first) + QString::number(objetos[0].vUp.second) + "\n";
+    infoTexto += "View Up: " + QString::number(objetos[0].vUp.first) + ", "+ QString::number(objetos[0].vUp.second) + "\n";
     for (int i = 0; i < objetoAtual.matriz.size(); ++i) {
         for (int j = 0; j < objetoAtual.matriz[i].size(); ++j) {
             matrizTexto += QString::number(objetoAtual.matriz[i][j], 'f', 0) + " ";
@@ -234,9 +267,9 @@ void MainWindow::onButtonClicked1() {
         rotacionar(objetos[atual], 4.5, 'x'); // Realiza a rotação
         objetos.setObjeto(atual, objetos[atual]);
         //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
-        atualizarDisplayMatriz();
         delay(10);
         update(); // Redesenha a interface
+        atualizarDisplayMatriz();
     }
 }
 
@@ -245,8 +278,10 @@ void MainWindow::onButtonClicked2() {
         transladar(objetos[atual], 1, 1, 0);
         objetos.setObjeto(atual, objetos[atual]);
         //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
+        //atualizarDisplayMatriz();
         delay(10);
         update();
+        atualizarDisplayMatriz();
     }
 }
 
@@ -255,9 +290,9 @@ void MainWindow::onButtonClicked3() {
         escalonar(objetos[atual], 0.96, 0.96, 0.96);
         objetos.setObjeto(atual, objetos[atual]);
         //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
-        atualizarDisplayMatriz();
         delay(10);
         update();
+        atualizarDisplayMatriz();
     }
 }
 

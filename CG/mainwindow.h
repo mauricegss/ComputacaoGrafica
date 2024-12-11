@@ -23,7 +23,7 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void adicionarObjeto(const Matriz& novoObjeto, const QString& nome);
+    void adicionarObjeto(const Matriz& novoObjeto);
     //void MainWindow::adicionarObjeto(const Matriz& novoObjeto, )
 
 protected:

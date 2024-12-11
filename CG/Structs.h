@@ -22,7 +22,7 @@ struct Aresta {
 struct Face {
     QVector<int> indices;  // Índices dos vértices que formam a face
 
-    Face(QVector<int> indices) : indices(indices) {}
+    Face(QVector<int> indices) : indices(indices){}
 };
 
 #endif // STRUCTS_H
