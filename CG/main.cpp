@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
     Matriz window(pontos, "Window");
     mainWindow.adicionarObjeto(window);
 
-    pontos = {{50, 50}, {550, 50}, {550, 550}, {50, 550}};
+    pontos = {{10, 10}, {550, 10}, {550, 550}, {10, 550}};
     Matriz viewPort(pontos, "Viewport");
     mainWindow.adicionarObjeto(viewPort);
 
@@ -24,6 +24,14 @@ int main(int argc, char *argv[]) {
         {150, 100, 150}, // Vértice base 2
         {100, 100, 150}, // Vértice base 3
         {125, 150, 125}  // Vértice do topo
+    };
+
+    QVector<Ponto3D> pontos2 = {
+        {100, 100, 10}, // Vértice base 0
+        {150, 100, 10}, // Vértice base 1
+        {150, 100, 15}, // Vértice base 2
+        {100, 100, 15}, // Vértice base 3
+        {125, 150, 12.5}  // Vértice do topo
     };
 
     // Definindo as arestas (conectando os pontos)
@@ -47,7 +55,7 @@ int main(int argc, char *argv[]) {
     mainWindow.adicionarObjeto(piramide);
 
     // Criando uma pirâmide apenas com arestas
-    Matriz piramideApenasArestas(pontos, arestas, "Arestas"); // Sem faces
+    Matriz piramideApenasArestas(pontos2, arestas, "Arestas"); // Sem faces
     mainWindow.adicionarObjeto(piramideApenasArestas);
 
     // Criando uma pirâmide apenas com faces
@@ -59,7 +67,7 @@ int main(int argc, char *argv[]) {
     mainWindow.adicionarObjeto(piramideApenasPontos);
 
     mainWindow.setWindowTitle("Computação Gráfica");
-    mainWindow.resize(600, 600);
+    mainWindow.resize(700, 700);
 
     return app.exec();
 }

@@ -3,7 +3,7 @@
 
 #include <QVector>
 #include <QtMath>
-#include "Structs.h"
+#include "structs.h"
 
 class Matriz {
 public:

@@ -34,6 +34,9 @@ private slots:
     void onButtonClicked1();
     void onButtonClicked2();
     void onButtonClicked3();
+    void onButtonClicked4();
+    void onButtonClicked5();
+    void onButtonClicked6();
     void seletor(int index);
 
 private:
@@ -51,6 +54,9 @@ private:
     QPushButton *button1;
     QPushButton *button2;
     QPushButton *button3;
+    QPushButton *button4;
+    QPushButton *button5;
+    QPushButton *button6;
     QComboBox *menu;
     QTextEdit *matrizDisplay;
     QTextEdit *cloneDisplay;

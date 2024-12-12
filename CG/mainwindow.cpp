@@ -4,9 +4,9 @@
 
 int atual=0;
 int XMAX = 550; //coordenadas viewport
-int XMIN = 50;
+int XMIN = 10;
 int YMAX = 550;
-int YMIN = 50;
+int YMIN = 10;
 
 /*const int INSIDE = 0; // 0000
 const int LEFT = 1;   // 0001
@@ -35,21 +35,30 @@ MainWindow::MainWindow(QWidget *parent)
     infoDisplay->setReadOnly(true);
 
     // Inicialize os botões e o menu na janela principal
-    button1 = new QPushButton("Rotacionar", this);
-    button2 = new QPushButton("Transladar", this);
-    button3 = new QPushButton("Escalonar", this);
+    button1 = new QPushButton("Escalonar (+)", this);
+    button2 = new QPushButton("Escalonar (-)", this);
+    button3 = new QPushButton("Transladar", this);
+    button4 = new QPushButton("Rotacionar (X)", this);
+    button5 = new QPushButton("Rotacionar (Y)", this);
+    button6 = new QPushButton("Rotacionar (Z)", this);
     menu = new QComboBox(this);
 
     // Configure as posições dos botões e do menu
-    button1->setGeometry(QRect(QPoint(10, 10), QSize(100, 30)));
-    button2->setGeometry(QRect(QPoint(120, 10), QSize(100, 30)));
-    button3->setGeometry(QRect(QPoint(230, 10), QSize(100, 30)));
-    menu->setGeometry(QRect(QPoint(450, 10), QSize(100, 30)));
+    menu->setGeometry(QRect(QPoint(560, 10), QSize(100, 30)));
+    button1->setGeometry(QRect(QPoint(560, 50), QSize(100, 30)));
+    button2->setGeometry(QRect(QPoint(560, 90), QSize(100, 30)));
+    button3->setGeometry(QRect(QPoint(560, 130), QSize(100, 30)));
+    button4->setGeometry(QRect(QPoint(560, 170), QSize(100, 30)));
+    button5->setGeometry(QRect(QPoint(560, 210), QSize(100, 30)));
+    button6->setGeometry(QRect(QPoint(560, 250), QSize(100, 30)));
 
     // Conecte os sinais dos botões aos slots correspondentes
     connect(button1, &QPushButton::clicked, this, &MainWindow::onButtonClicked1);
     connect(button2, &QPushButton::clicked, this, &MainWindow::onButtonClicked2);
     connect(button3, &QPushButton::clicked, this, &MainWindow::onButtonClicked3);
+    connect(button4, &QPushButton::clicked, this, &MainWindow::onButtonClicked4);
+    connect(button5, &QPushButton::clicked, this, &MainWindow::onButtonClicked5);
+    connect(button6, &QPushButton::clicked, this, &MainWindow::onButtonClicked6);
     connect(menu, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::seletor);
 
 }
@@ -262,6 +271,40 @@ void MainWindow::atualizarDisplayMatriz() {
 }
 
 void MainWindow::onButtonClicked1() {
+    for(int i = 0; i < 10; i++) {
+        escalonar(objetos[atual], 1.05, 1.05, 1.05);
+        objetos.setObjeto(atual, objetos[atual]);
+        //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
+        delay(10);
+        update();
+        atualizarDisplayMatriz();
+    }
+}
+
+void MainWindow::onButtonClicked2() {
+    for(int i = 0; i < 10; i++) {
+        escalonar(objetos[atual], 0.95,0.95,0.95);
+        objetos.setObjeto(atual, objetos[atual]);
+        //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
+        delay(10);
+        update();
+        atualizarDisplayMatriz();
+    }
+}
+
+void MainWindow::onButtonClicked3() {
+    for(int i = 0; i < 10; i++) {
+        transladar(objetos[atual], -1, -1, 0);
+        objetos.setObjeto(atual, objetos[atual]);
+        //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
+        //atualizarDisplayMatriz();
+        delay(10);
+        update();
+        atualizarDisplayMatriz();
+    }
+}
+
+void MainWindow::onButtonClicked4() {
     if (atual < 0 || atual >= objetos.size()) {
         qDebug() << "Índice inválido para rotação.";
         return;
@@ -276,25 +319,32 @@ void MainWindow::onButtonClicked1() {
     }
 }
 
-void MainWindow::onButtonClicked2() {
-    for(int i = 0; i < 10; i++) {
-        transladar(objetos[atual], 1, 1, 0);
+void MainWindow::onButtonClicked5() {
+    if (atual < 0 || atual >= objetos.size()) {
+        qDebug() << "Índice inválido para rotação.";
+        return;
+    }
+    for (int i = 0; i < 10; i++) {
+        rotacionar(objetos[atual], 4.5, 'y'); // Realiza a rotação
         objetos.setObjeto(atual, objetos[atual]);
         //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
-        //atualizarDisplayMatriz();
         delay(10);
-        update();
+        update(); // Redesenha a interface
         atualizarDisplayMatriz();
     }
 }
 
-void MainWindow::onButtonClicked3() {
-    for(int i = 0; i < 10; i++) {
-        escalonar(objetos[atual], 0.96, 0.96, 0.96);
+void MainWindow::onButtonClicked6() {
+    if (atual < 0 || atual >= objetos.size()) {
+        qDebug() << "Índice inválido para rotação.";
+        return;
+    }
+    for (int i = 0; i < 10; i++) {
+        rotacionar(objetos[atual], 4.5, 'z'); // Realiza a rotação
         objetos.setObjeto(atual, objetos[atual]);
         //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
         delay(10);
-        update();
+        update(); // Redesenha a interface
         atualizarDisplayMatriz();
     }
 }
