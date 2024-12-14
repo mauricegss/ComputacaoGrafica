@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     delay.cpp \
+    leitorobj.cpp \
     main.cpp \
     mainwindow.cpp \
     matriz.cpp
@@ -17,6 +18,7 @@ SOURCES += \
 HEADERS += \
     delay.h \
     displayfile.h \
+    leitorobj.h \
     mainwindow.h \
     matriz.h \
     structs.h

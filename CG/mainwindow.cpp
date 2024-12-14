@@ -182,7 +182,7 @@ void MainWindow::Desenhar(QPainter &painter) {
         temp = normalizar(objetos[i].clone, objetos[0].clone, objetos[1].matriz);
 
         // Desenhando as faces, se existirem
-        if (!objetos[i].faces.isEmpty()) {
+        /*if (!objetos[i].faces.isEmpty()) {
             painter.setPen(Qt::transparent);
             painter.setBrush(Qt::green); // Cor para faces
 
@@ -202,7 +202,7 @@ void MainWindow::Desenhar(QPainter &painter) {
                     painter.drawPolygon(pontosFace);
                 }
             }
-        }
+        }*/
 
         // Desenhando as arestas, se existirem (APÓS as faces para sobrepor)
         if (!objetos[i].arestas.isEmpty()) {
@@ -224,7 +224,6 @@ void MainWindow::Desenhar(QPainter &painter) {
                     painter.drawLine(QPointF(x1, y1), QPointF(x2, y2));
                 }
             }
-
         }
         painter.setPen(Qt::red);
         painter.setBrush(Qt::transparent);
@@ -233,9 +232,9 @@ void MainWindow::Desenhar(QPainter &painter) {
             double y = temp[1][j];
 
             // Desenhando o ponto como um pequeno círculo
-            if(x <= XMAX && x >= XMIN && y <= YMAX && y >= YMIN){
+            /*if(x <= XMAX && x >= XMIN && y <= YMAX && y >= YMIN){
                 painter.drawEllipse(QPointF(x, y), 3, 3); // Tamanho do ponto pode ser ajustado (3, 3)
-            }
+            }*/
         }
     }
 }
@@ -414,7 +413,6 @@ void MainWindow::aplicarSCN(){
     for (int i = 1; i < objetos.size(); ++i) {
         rotacionarClone(objetos[0],objetos[i], -qRadiansToDegrees(theta)); // Converta θ para graus e aplique a rotação
     }
-
 }
 
 bool MainWindow::clipPolygon(QVector<QPointF>& pontos) {
@@ -485,4 +483,6 @@ bool MainWindow::clipPolygon(QVector<QPointF>& pontos) {
     }
     return !pontos.isEmpty();
 }
+
+
 

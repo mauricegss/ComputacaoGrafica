@@ -1,7 +1,9 @@
+
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
 #include <QVector>
+
 
 // Estrutura para representar um ponto 3D
 struct Ponto3D {
@@ -22,7 +24,13 @@ struct Aresta {
 struct Face {
     QVector<int> indices;  // Índices dos vértices que formam a face
 
+    Face() = default; // Construtor padrão
     Face(std::initializer_list<int> initList) : indices(initList) {}
 };
 
+class Objeto {
+public:
+    QVector<Ponto3D> pontos;  // Agora armazenando Ponto3D corretamente
+    QVector<QPair<int, int>> arestas;
+};
 #endif // STRUCTS_H

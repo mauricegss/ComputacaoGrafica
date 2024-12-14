@@ -1,6 +1,7 @@
 #include <QApplication>
 #include "mainwindow.h"
 #include "matriz.h"
+#include "leitorobj.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
@@ -8,66 +9,32 @@ int main(int argc, char *argv[]) {
     MainWindow mainWindow;
     mainWindow.show();
 
-    // Inicializando pontos diretamente como pares
+    // Criando o leitor de arquivos OBJ
+    OBJFileReader reader;
+
+    // Inicializando pontos para o objeto "Window"
     QVector<Ponto3D> pontos = {{100, 100}, {300, 100}, {300, 300}, {100, 300}};
     Matriz window(pontos, "Window");
-    mainWindow.adicionarObjeto(window);
+    mainWindow.adicionarObjeto(window);  // Adicionando objeto à janela principal
 
+    // Inicializando pontos para o objeto "Viewport"
     pontos = {{10, 10}, {550, 10}, {550, 550}, {10, 550}};
     Matriz viewPort(pontos, "Viewport");
-    mainWindow.adicionarObjeto(viewPort);
+    mainWindow.adicionarObjeto(viewPort);  // Adicionando objeto à janela principal
 
-    // Definindo os pontos da pirâmide
-    pontos = {
-        {100, 100, 100}, // Vértice base 0
-        {150, 100, 100}, // Vértice base 1
-        {150, 100, 150}, // Vértice base 2
-        {100, 100, 150}, // Vértice base 3
-        {125, 150, 125}  // Vértice do topo
-    };
+    // Carregando um objeto externo (arquivo OBJ)
+    QString objFilename = "C:/Users/Vinicius/Downloads/ComputacaoGrafica-main/Arquivosobj/8336/Pokemon XY/Gardevoir/GardevoirMega.obj";
+    Matriz Gardevoir = reader.lerMatriz(objFilename, "GardevoirMega");
+    mainWindow.adicionarObjeto(Gardevoir);  // Adicionando o objeto externo à janela principal
 
-    QVector<Ponto3D> pontos2 = {
-        {100, 100, 10}, // Vértice base 0
-        {150, 100, 10}, // Vértice base 1
-        {150, 100, 15}, // Vértice base 2
-        {100, 100, 15}, // Vértice base 3
-        {125, 150, 12.5}  // Vértice do topo
-    };
+    QString objFilename2 = "C:/Users/Vinicius/Downloads/ComputacaoGrafica-main/Arquivosobj/8819/Pokemon XY/Vaporeon/Vaporeon.obj";
+    Matriz Vaporeon = reader.lerMatriz(objFilename2, "Vaporeon");
+    mainWindow.adicionarObjeto(Vaporeon);  // Adicionando o objeto externo à janela principal
 
-    // Definindo as arestas (conectando os pontos)
-    QVector<Aresta> arestas = {
-        {0, 1}, {1, 2}, {2, 3}, {3, 0}, // Base da pirâmide
-        {0, 4}, {1, 4}, {2, 4}, {3, 4}  // Conectando o topo com os vértices da base
-    };
-
-    // Definindo as faces (índices dos pontos que formam as faces)
-
-    QVector<Face> faces = {
-        {0, 1, 4},  // Face 1 (triângulo)
-        {1, 2, 4},  // Face 2 (triângulo)
-        {2, 3, 4},  // Face 3 (triângulo)
-        {3, 0, 4},  // Face 4 (triângulo)
-        {0, 1, 2, 3} // Base (quadrado)
-    };
-
-    // Criando uma pirâmide completa (com arestas e faces)
-    Matriz piramide(pontos, arestas, faces, "Ambos");
-    mainWindow.adicionarObjeto(piramide);
-
-    // Criando uma pirâmide apenas com arestas
-    Matriz piramideApenasArestas(pontos2, arestas, "Arestas"); // Sem faces
-    mainWindow.adicionarObjeto(piramideApenasArestas);
-
-    // Criando uma pirâmide apenas com faces
-    Matriz piramideApenasFaces(pontos, faces, "Faces"); // Sem arestas
-    mainWindow.adicionarObjeto(piramideApenasFaces);
-
-    // Criando uma pirâmide apenas com pontos (nem arestas nem faces)
-    Matriz piramideApenasPontos(pontos, "Pontos");
-    mainWindow.adicionarObjeto(piramideApenasPontos);
-
+    // Configurações finais da janela principal
     mainWindow.setWindowTitle("Computação Gráfica");
     mainWindow.resize(700, 700);
 
+    // Inicia o loop de execução da aplicação
     return app.exec();
 }
