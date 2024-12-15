@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
     OBJFileReader reader;
 
     // Inicializando pontos para o objeto "Window"
-    QVector<Ponto3D> pontos = {{100, 100}, {300, 100}, {300, 300}, {100, 300}};
+    QVector<Ponto3D> pontos = {{100, 100, 1}, {300, 100, 1}, {300, 300, 1}, {100, 300, 1}};
     Matriz window(pontos, "Window");
     mainWindow.adicionarObjeto(window);  // Adicionando objeto à janela principal
 
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     Matriz Gardevoir = reader.lerMatriz(objFilename, "GardevoirMega");
     mainWindow.adicionarObjeto(Gardevoir);  // Adicionando o objeto externo à janela principal
 
-    QString objFilename2 = "C:/Users/Vinicius/Downloads/ComputacaoGrafica-main/Arquivosobj/8819/Pokemon XY/Vaporeon/Vaporeon.obj";
+    QString objFilename2 = "D:/DownloadsHD/UTFPR/Computacao_grafica/ComputacaoGrafica/Arquivosobj/8819/Pokemon XY/Vaporeon/Vaporeon.obj";
     Matriz Vaporeon = reader.lerMatriz(objFilename2, "Vaporeon");
     mainWindow.adicionarObjeto(Vaporeon);  // Adicionando o objeto externo à janela principal
 

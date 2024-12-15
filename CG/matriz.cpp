@@ -190,10 +190,7 @@ QVector<QVector<double>> normalizar(QVector<QVector<double>> matriz, QVector<QVe
     double yVpMin = viewPort[1][0];
     double yVpMax = viewPort[1][2];
 
-    if (xwMax == xwMin || ywMax == ywMin) {
-        qDebug() << "Erro: limites inválidos em window (divisão por zero)!";
-        return QVector<QVector<double>>();
-    }
+
 
     for (int i = 0; i < numPontos; ++i) {
         resultado[0][i] = ((matriz[0][i] - xwMin) / (xwMax - xwMin)) * (xVpMax - xVpMin);

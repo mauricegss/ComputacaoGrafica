@@ -103,7 +103,6 @@ int calcularCodigo(double x, double y) {
 
     if (y < YMIN) code |= BOTTOM;
     else if (y > YMAX) code |= TOP;
-
     return code;
 }
 
@@ -160,7 +159,7 @@ void MainWindow::Desenhar(QPainter &painter) {
     QVector<QVector<double>> temp;
     temp.resize(4);
 
-    // AQUI A PARTE DE DESENHAR A WINDOW
+    // AQUI A PARTE DE DESENHAR A VIEWPORT
     int numPontos = objetos[1].matriz[0].size();
     if (numPontos >= 2) { // Garantir que há pelo menos dois pontos
         painter.setPen(Qt::black); // Cor azul para objetos[1]
