@@ -34,10 +34,10 @@ bool OBJFileReader::readOBJ(const QString &filename, QVector<Ponto3D> &vertices,
             }
             std::istringstream faceStream(line);
 
-            // Ignorar o prefixo
+            //Ignorar o prefixo
             faceStream >> prefix;
 
-            // Processar índices dos vértices
+            //Processar índices dos vértices
             while (faceStream >> vertexData) {
                 size_t pos = vertexData.find('/');
                 if (pos != std::string::npos)
@@ -74,7 +74,7 @@ Matriz OBJFileReader::lerMatriz(const QString &filename, const QString &nomeObje
         return Matriz({}, {}, {}, nomeObjeto);
     }
 
-    // Construir arestas a partir das faces (opcional, se necessário)
+    //Construir arestas a partir das faces (opcional, se necessário)
     QVector<Aresta> arestas;
     for (const auto &face : faces) {
         for (int i = 0; i < face.indices.size(); ++i) {

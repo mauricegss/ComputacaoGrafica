@@ -1,6 +1,5 @@
 #ifndef DISPLAYFILE_H
 #define DISPLAYFILE_H
-
 #include <QVector>
 #include "matriz.h"
 

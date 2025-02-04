@@ -1,6 +1,5 @@
 #ifndef LEITOROBJ_H
 #define LEITOROBJ_H
-
 #include <QString>
 #include <QVector>
 #include <iostream>

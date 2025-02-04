@@ -18,39 +18,53 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    // Frame de desenho
+    //Frame de desenho
     /*viewPort = new QFrame(this);
     viewPort ->setGeometry(XMIN, YMIN, XMAX, YMAX); // Define a posição e o tamanho da área de desenho
     viewPort ->setFrameShape(QFrame::Box); */
 
     //int larguraJanela = this->width();  // Largura total da janela
     // Display .matriz
-    matrizDisplay = new QTextEdit(this);
-    matrizDisplay->setReadOnly(true);
+    //matrizDisplay = new QTextEdit(this);
+    //matrizDisplay->setReadOnly(true);
 
-    // Display .normalizada
-    cloneDisplay = new QTextEdit(this);
-    cloneDisplay->setReadOnly(true);
-    infoDisplay = new QTextEdit(this);
-    infoDisplay->setReadOnly(true);
+    //Display .normalizada
+    //cloneDisplay = new QTextEdit(this);
+    //cloneDisplay->setReadOnly(true);
+    //infoDisplay = new QTextEdit(this);
+    //infoDisplay->setReadOnly(true);
 
-    // Inicialize os botões e o menu na janela principal
+    //Inicializa os botões e o menu na janela principal
     button1 = new QPushButton("Escalonar (+)", this);
     button2 = new QPushButton("Escalonar (-)", this);
-    button3 = new QPushButton("Transladar", this);
+    button3 = new QPushButton("Transladar (O)", this);
     button4 = new QPushButton("Rotacionar (X)", this);
     button5 = new QPushButton("Rotacionar (Y)", this);
     button6 = new QPushButton("Rotacionar (Z)", this);
+    button7 = new QPushButton("Transladar (L)", this);
+    button8 = new QPushButton("Transladar (N)", this);
+    button9 = new QPushButton("Transladar (S)", this);
+    button10 = new QPushButton("Transladar (NO)", this);
+    button11 = new QPushButton("Transladar (NE)", this);
+    button12 = new QPushButton("Transladar (SO)", this);
+    button13 = new QPushButton("Transladar (SE)", this);
     menu = new QComboBox(this);
 
-    // Configure as posições dos botões e do menu
+    //Configura as posições dos botões e do menu
     menu->setGeometry(QRect(QPoint(560, 10), QSize(100, 30)));
     button1->setGeometry(QRect(QPoint(560, 50), QSize(100, 30)));
     button2->setGeometry(QRect(QPoint(560, 90), QSize(100, 30)));
-    button3->setGeometry(QRect(QPoint(560, 130), QSize(100, 30)));
-    button4->setGeometry(QRect(QPoint(560, 170), QSize(100, 30)));
-    button5->setGeometry(QRect(QPoint(560, 210), QSize(100, 30)));
-    button6->setGeometry(QRect(QPoint(560, 250), QSize(100, 30)));
+    button4->setGeometry(QRect(QPoint(560, 130), QSize(100, 30)));
+    button5->setGeometry(QRect(QPoint(560, 170), QSize(100, 30)));
+    button6->setGeometry(QRect(QPoint(560, 210), QSize(100, 30)));
+    button3->setGeometry(QRect(QPoint(560, 250), QSize(100, 30)));
+    button7->setGeometry(QRect(QPoint(560, 290), QSize(100, 30)));
+    button8->setGeometry(QRect(QPoint(560, 330), QSize(100, 30)));
+    button9->setGeometry(QRect(QPoint(560, 370), QSize(100, 30)));
+    button10->setGeometry(QRect(QPoint(560, 410), QSize(100, 30)));
+    button11->setGeometry(QRect(QPoint(560, 450), QSize(100, 30)));
+    button12->setGeometry(QRect(QPoint(560, 490), QSize(100, 30)));
+    button13->setGeometry(QRect(QPoint(560, 530), QSize(100, 30)));
 
     // Conecte os sinais dos botões aos slots correspondentes
     connect(button1, &QPushButton::clicked, this, &MainWindow::onButtonClicked1);
@@ -59,8 +73,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(button4, &QPushButton::clicked, this, &MainWindow::onButtonClicked4);
     connect(button5, &QPushButton::clicked, this, &MainWindow::onButtonClicked5);
     connect(button6, &QPushButton::clicked, this, &MainWindow::onButtonClicked6);
+    connect(button7, &QPushButton::clicked, this, &MainWindow::onButtonClicked7);
+    connect(button8, &QPushButton::clicked, this, &MainWindow::onButtonClicked8);
+    connect(button9, &QPushButton::clicked, this, &MainWindow::onButtonClicked9);
+    connect(button10, &QPushButton::clicked, this, &MainWindow::onButtonClicked10);
+    connect(button11, &QPushButton::clicked, this, &MainWindow::onButtonClicked11);
+    connect(button12, &QPushButton::clicked, this, &MainWindow::onButtonClicked12);
+    connect(button13, &QPushButton::clicked, this, &MainWindow::onButtonClicked13);
     connect(menu, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::seletor);
-
 }
 
 MainWindow::~MainWindow() {
@@ -68,13 +88,10 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::adicionarObjeto(const Matriz& novoObjeto) {
-
     objetos.adicionarObjeto(novoObjeto);
     //displayFile.adicionarObjeto(novoObjeto);
     //objetos = displayFile.getObjetos();
-
     menu->addItem(novoObjeto.nome);
-
     update();
 }
 
@@ -138,8 +155,7 @@ bool clipping(double &x1, double &y1, double &x2, double &y2) {
                 y = y1 + (y2 - y1) * (XMIN - x1) / (x2 - x1);
                 x = XMIN;
             }
-
-            // Substitua o ponto fora pela interseção
+            //Substitua o ponto fora pela interseção
             if (codeOut == code1) {
                 x1 = x;
                 y1 = y;
@@ -159,12 +175,12 @@ void MainWindow::Desenhar(QPainter &painter) {
     QVector<QVector<double>> temp;
     temp.resize(4);
 
-    // AQUI A PARTE DE DESENHAR A VIEWPORT
+    //Desenhando a Viewport
     int numPontos = objetos[1].matriz[0].size();
-    if (numPontos >= 2) { // Garantir que há pelo menos dois pontos
-        painter.setPen(Qt::black); // Cor azul para objetos[1]
+    if (numPontos >= 2) { //Garantir que há pelo menos dois pontos
+        painter.setPen(Qt::black); //Cor azul para objetos[1]
         for (int j = 0; j < numPontos; ++j) {
-            int k = (j + 1) % numPontos; // Liga o último ponto ao primeiro
+            int k = (j + 1) % numPontos; //Liga o último ponto ao primeiro
 
             x1 = objetos[1].matriz[0][j];
             y1 = objetos[1].matriz[1][j];
@@ -174,9 +190,8 @@ void MainWindow::Desenhar(QPainter &painter) {
             painter.drawLine(QPointF(x1, y1), QPointF(x2, y2));
         }
     }
-    // AQUI
 
-    // Agora desenha os objetos (arestas e faces)
+    //Desenha os objetos (arestas e faces)
     for (int i = 2; i < objetos.size(); ++i) {
         temp = normalizar(objetos[i].clone, objetos[0].clone, objetos[1].matriz);
 
@@ -203,13 +218,12 @@ void MainWindow::Desenhar(QPainter &painter) {
             }
         }*/
 
-        // Desenhando as arestas, se existirem (APÓS as faces para sobrepor)
+        //Desenhando as arestas, se existirem (APÓS as faces para sobrepor)
         if (!objetos[i].arestas.isEmpty()) {
 
             painter.setPen(Qt::blue); // Cor para as arestas
 
-            // Desenhando as arestas
-
+            //Desenhando as arestas
             for (const Aresta &aresta : objetos[i].arestas) {
                 int p1 = aresta.p1;
                 int p2 = aresta.p2;
@@ -218,7 +232,7 @@ void MainWindow::Desenhar(QPainter &painter) {
                 y1 = temp[1][p1];
                 x2 = temp[0][p2];
                 y2 = temp[1][p2];
-                // Aplica o algoritmo de Cohen-Sutherland (se necessário)
+                //Aplica o algoritmo de Cohen-Sutherland (se necessário)
                 if (clipping(x1, y1, x2, y2)) {
                     painter.drawLine(QPointF(x1, y1), QPointF(x2, y2));
                 }
@@ -230,7 +244,7 @@ void MainWindow::Desenhar(QPainter &painter) {
             double x = temp[0][j];
             double y = temp[1][j];
 
-            // Desenhando o ponto como um pequeno círculo
+            //Desenhando o ponto como um pequeno círculo
             /*if(x <= XMAX && x >= XMIN && y <= YMAX && y >= YMIN){
                 painter.drawEllipse(QPointF(x, y), 3, 3); // Tamanho do ponto pode ser ajustado (3, 3)
             }*/
@@ -238,6 +252,7 @@ void MainWindow::Desenhar(QPainter &painter) {
     }
 }
 
+/*
 void MainWindow::atualizarDisplayMatriz() {
     if (atual < 0 || atual >= objetos.size()) return;
 
@@ -267,6 +282,7 @@ void MainWindow::atualizarDisplayMatriz() {
     matrizDisplay->setText(matrizTexto);
     cloneDisplay->setText(cloneTexto);
 }
+*/
 
 void MainWindow::onButtonClicked1() {
     for(int i = 0; i < 10; i++) {
@@ -275,7 +291,7 @@ void MainWindow::onButtonClicked1() {
         //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
         delay(10);
         update();
-        atualizarDisplayMatriz();
+        //atualizarDisplayMatriz();
     }
 }
 
@@ -286,19 +302,19 @@ void MainWindow::onButtonClicked2() {
         //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
         delay(10);
         update();
-        atualizarDisplayMatriz();
+        //atualizarDisplayMatriz();
     }
 }
 
 void MainWindow::onButtonClicked3() {
     for(int i = 0; i < 10; i++) {
-        transladar(objetos[atual], -1, -1, 0);
+        transladar(objetos[atual], 1, 0, 0);
         objetos.setObjeto(atual, objetos[atual]);
         //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
         //atualizarDisplayMatriz();
         delay(10);
         update();
-        atualizarDisplayMatriz();
+        //atualizarDisplayMatriz();
     }
 }
 
@@ -313,7 +329,7 @@ void MainWindow::onButtonClicked4() {
         //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
         delay(10);
         update(); // Redesenha a interface
-        atualizarDisplayMatriz();
+        //atualizarDisplayMatriz();
     }
 }
 
@@ -328,7 +344,7 @@ void MainWindow::onButtonClicked5() {
         //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
         delay(10);
         update(); // Redesenha a interface
-        atualizarDisplayMatriz();
+        //atualizarDisplayMatriz();
     }
 }
 
@@ -343,43 +359,124 @@ void MainWindow::onButtonClicked6() {
         //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
         delay(10);
         update(); // Redesenha a interface
-        atualizarDisplayMatriz();
+        //atualizarDisplayMatriz();
     }
 }
 
 void MainWindow::seletor(int index) {
     if (index >= 0 && index < objetos.size()) {
         atual = index;
-        atualizarDisplayMatriz();
+        //atualizarDisplayMatriz();
     } else {
         qDebug() << "Índice inválido selecionado!";
     }
 }
 
+void MainWindow::onButtonClicked7() {
+    for(int i = 0; i < 10; i++) {
+        transladar(objetos[atual], -1, 0, 0);
+        objetos.setObjeto(atual, objetos[atual]);
+        //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
+        //atualizarDisplayMatriz();
+        delay(10);
+        update();
+        //atualizarDisplayMatriz();
+    }
+}
+
+void MainWindow::onButtonClicked8() {
+    for(int i = 0; i < 10; i++) {
+        transladar(objetos[atual], 0, -1, 0);
+        objetos.setObjeto(atual, objetos[atual]);
+        //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
+        //atualizarDisplayMatriz();
+        delay(10);
+        update();
+        //atualizarDisplayMatriz();
+    }
+}
+
+void MainWindow::onButtonClicked9() {
+    for(int i = 0; i < 10; i++) {
+        transladar(objetos[atual], 0, 1, 0);
+        objetos.setObjeto(atual, objetos[atual]);
+        //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
+        //atualizarDisplayMatriz();
+        delay(10);
+        update();
+        //atualizarDisplayMatriz();
+    }
+}
+
+void MainWindow::onButtonClicked10() {
+    for(int i = 0; i < 10; i++) {
+        transladar(objetos[atual], 1, -1, 0);
+        objetos.setObjeto(atual, objetos[atual]);
+        //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
+        //atualizarDisplayMatriz();
+        delay(10);
+        update();
+        //atualizarDisplayMatriz();
+    }
+}
+
+void MainWindow::onButtonClicked11() {
+    for(int i = 0; i < 10; i++) {
+        transladar(objetos[atual], -1, -1, 0);
+        objetos.setObjeto(atual, objetos[atual]);
+        //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
+        //atualizarDisplayMatriz();
+        delay(10);
+        update();
+        //atualizarDisplayMatriz();
+    }
+}
+
+void MainWindow::onButtonClicked12() {
+    for(int i = 0; i < 10; i++) {
+        transladar(objetos[atual], 1, 1, 0);
+        objetos.setObjeto(atual, objetos[atual]);
+        //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
+        //atualizarDisplayMatriz();
+        delay(10);
+        update();
+        //atualizarDisplayMatriz();
+    }
+}
+
+void MainWindow::onButtonClicked13() {
+    for(int i = 0; i < 10; i++) {
+        transladar(objetos[atual], -1, 1, 0);
+        objetos.setObjeto(atual, objetos[atual]);
+        //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
+        //atualizarDisplayMatriz();
+        delay(10);
+        update();
+        //atualizarDisplayMatriz();
+    }
+}
+
+
 void MainWindow::resizeEvent(QResizeEvent* event) {
     QMainWindow::resizeEvent(event);
+    //Ajuste o tamanho e posição do matrizDisplay
+    //int larguraJanela = this->width();
+    //int alturaJanela = this->height();
+    //int larguraDisplay = 200; // Largura fixa
+    //int alturaDisplay = 100; // Altura fixa
 
-    // Ajuste o tamanho e posição do matrizDisplay
-   // int larguraJanela = this->width();
-    int alturaJanela = this->height();
-    int larguraDisplay = 200; // Largura fixa
-    int alturaDisplay = 100; // Altura fixa
-
-    infoDisplay->setGeometry(10, alturaJanela - alturaDisplay - 10, larguraDisplay, alturaDisplay);
-    matrizDisplay->setGeometry(10 + larguraDisplay + 10, alturaJanela - alturaDisplay - 10, larguraDisplay, alturaDisplay);
-    cloneDisplay->setGeometry(10 + 2 * larguraDisplay + 20, alturaJanela - alturaDisplay - 10, larguraDisplay, alturaDisplay);
+    //infoDisplay->setGeometry(10, alturaJanela - alturaDisplay - 10, larguraDisplay, alturaDisplay);
+    //matrizDisplay->setGeometry(10 + larguraDisplay + 10, alturaJanela - alturaDisplay - 10, larguraDisplay, alturaDisplay);
+    //cloneDisplay->setGeometry(10 + 2 * larguraDisplay + 20, alturaJanela - alturaDisplay - 10, larguraDisplay, alturaDisplay);
 }
 
 void MainWindow::aplicarSCN(){
-
-    // Passo 0 - Criar Clone = Matriz
+    //Criando Clone = Matriz
     for(int i = 0; i<objetos.size(); i++){
         objetos[i].clone = objetos[i].matriz;
     }
-
-    // Passo 1 - Translade Wc para a origem e o mundo de -Wcx e -Wcy
-
-    // Calcula o centro geométrico da Window
+    //Transladando Wc para a origem e o mundo de -Wcx e -Wcy
+    //Calcula o centro geométrico da Window
     double cx = 0, cy = 0, cz =0;
     int numPontos = objetos[0].matriz[0].size();
     for (int i = 0; i < numPontos; ++i) {
@@ -390,44 +487,41 @@ void MainWindow::aplicarSCN(){
     cx /= numPontos;
     cy /= numPontos;
     cz /= numPontos;
-
-    // Transalação
+    //Transalação
     for(int i = 0; i<objetos.size(); i++){
         transladarClone(objetos[i], -cx, -cy, -cz);
     }
-
-    // Passo 2 - Determine vUp e o angulo vUp com Y
+    //Determinando vUp e o angulo vUp com Y
     double vx = objetos[0].vUp.first;
     double vy = objetos[0].vUp.second;
-
     double moduloV = qSqrt(vx * vx + vy * vy);
     double theta = qAcos(vy / moduloV);
-
     if (vx < 0) {
         theta = -theta;
     }
-
-    // Passo 3 - Rotacione o mundo por -theta
+    //Rotacionando o mundo por -theta
     rotacionarClone(objetos[0], objetos[0], qRadiansToDegrees(theta));
     for (int i = 1; i < objetos.size(); ++i) {
-        rotacionarClone(objetos[0],objetos[i], -qRadiansToDegrees(theta)); // Converta θ para graus e aplique a rotação
+        rotacionarClone(objetos[0],objetos[i], -qRadiansToDegrees(theta)); //Converta theta para graus e aplique a rotação
     }
 }
 
 bool MainWindow::clipPolygon(QVector<QPointF>& pontos) {
     QVector<QPointF> clipped;
     QPointF s;
-    // Clipping em cada borda da janela de visualização (esquerda, direita, cima e baixo)
+    //Clipping em cada borda da janela de visualização (esquerda, direita, cima e baixo)
     for (int i = 0; i < 4; ++i) {
         QVector<QPointF> newPoints;
         if (pontos.isEmpty()) {
-            return false; // Polígono completamente eliminado
+            return false;
+        //Polígono completamente eliminado
         } else {
             s = pontos.last();
         }
         for (int j = 0; j < pontos.size(); ++j) {
             QPointF p = pontos[j];
-            if (i == 0) { // Clipping pela borda esquerda
+            if (i == 0) {
+                // Clipping pela borda esquerda
                 if (p.x() >= XMIN) {
                     if (s.x() < XMIN) {
                         double y = s.y() + (p.y() - s.y()) * (XMIN - s.x()) / (p.x() - s.x());
@@ -439,7 +533,8 @@ bool MainWindow::clipPolygon(QVector<QPointF>& pontos) {
                     double y = s.y() + (p.y() - s.y()) * (XMIN - s.x()) / (p.x() - s.x());
                     newPoints.append(QPointF(XMIN, y));
                 }
-            } else if (i == 1) { // Clipping pela borda direita
+            } else if (i == 1) {
+                // Clipping pela borda direita
                 if (p.x() <= XMAX) {
                     if (s.x() > XMAX) {
                         double y = s.y() + (p.y() - s.y()) * (XMAX - s.x()) / (p.x() - s.x());
@@ -451,7 +546,8 @@ bool MainWindow::clipPolygon(QVector<QPointF>& pontos) {
                     double y = s.y() + (p.y() - s.y()) * (XMAX - s.x()) / (p.x() - s.x());
                     newPoints.append(QPointF(XMAX, y));
                 }
-            } else if (i == 2) { // Clipping pela borda inferior
+            } else if (i == 2) {
+                //Clipping pela borda inferior
                 if (p.y() >= YMIN) {
                     if (s.y() < YMIN) {
                         double x = s.x() + (p.x() - s.x()) * (YMIN - s.y()) / (p.y() - s.y());
@@ -463,7 +559,8 @@ bool MainWindow::clipPolygon(QVector<QPointF>& pontos) {
                     double x = s.x() + (p.x() - s.x()) * (YMIN - s.y()) / (p.y() - s.y());
                     newPoints.append(QPointF(x, YMIN));
                 }
-            } else { // Clipping pela borda superior
+            } else {
+                //Clipping pela borda superior
                 if (p.y() <= YMAX) {
                     if (s.y() > YMAX) {
                         double x = s.x() + (p.x() - s.x()) * (YMAX - s.y()) / (p.y() - s.y());
