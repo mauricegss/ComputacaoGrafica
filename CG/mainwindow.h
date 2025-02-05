@@ -7,8 +7,10 @@
 #include "matriz.h"
 #include "delay.h"
 #include "displayfile.h"
+#include "camera.h"
 #include <QFrame>
 #include <QTextEdit>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -46,6 +48,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     //QVector<Matriz> objetos; //Vetor para armazenar cada objeto como uma única instância de Matriz
+    Camera camera;
     DisplayFile objetos;
     void Desenhar(QPainter &painter);
     void aplicarSCN();

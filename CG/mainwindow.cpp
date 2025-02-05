@@ -240,15 +240,17 @@ void MainWindow::Desenhar(QPainter &painter) {
         }
         painter.setPen(Qt::red);
         painter.setBrush(Qt::transparent);
+        /*
         for (int j = 0; j < objetos[i].matriz[0].size(); ++j) {
             double x = temp[0][j];
             double y = temp[1][j];
 
             //Desenhando o ponto como um pequeno círculo
-            /*if(x <= XMAX && x >= XMIN && y <= YMAX && y >= YMIN){
+            if(x <= XMAX && x >= XMIN && y <= YMAX && y >= YMIN){
                 painter.drawEllipse(QPointF(x, y), 3, 3); // Tamanho do ponto pode ser ajustado (3, 3)
-            }*/
+            }
         }
+        */
     }
 }
 
@@ -319,49 +321,20 @@ void MainWindow::onButtonClicked3() {
 }
 
 void MainWindow::onButtonClicked4() {
-    if (atual < 0 || atual >= objetos.size()) {
-        qDebug() << "Índice inválido para rotação.";
-        return;
-    }
-    for (int i = 0; i < 10; i++) {
-        rotacionar(objetos[atual], 4.5, 'x'); // Realiza a rotação
-        objetos.setObjeto(atual, objetos[atual]);
-        //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
-        delay(10);
-        update(); // Redesenha a interface
-        //atualizarDisplayMatriz();
-    }
+    camera.rotacionarCamera(4.5, 'x');
+    update();
 }
 
 void MainWindow::onButtonClicked5() {
-    if (atual < 0 || atual >= objetos.size()) {
-        qDebug() << "Índice inválido para rotação.";
-        return;
-    }
-    for (int i = 0; i < 10; i++) {
-        rotacionar(objetos[atual], 4.5, 'y'); // Realiza a rotação
-        objetos.setObjeto(atual, objetos[atual]);
-        //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
-        delay(10);
-        update(); // Redesenha a interface
-        //atualizarDisplayMatriz();
-    }
+    camera.rotacionarCamera(4.5, 'y');
+    update();
 }
 
 void MainWindow::onButtonClicked6() {
-    if (atual < 0 || atual >= objetos.size()) {
-        qDebug() << "Índice inválido para rotação.";
-        return;
-    }
-    for (int i = 0; i < 10; i++) {
-        rotacionar(objetos[atual], 4.5, 'z'); // Realiza a rotação
-        objetos.setObjeto(atual, objetos[atual]);
-        //displayFile.setObjeto(atual, objetos[atual]); // Atualiza no displayFile
-        delay(10);
-        update(); // Redesenha a interface
-        //atualizarDisplayMatriz();
-    }
+    camera.rotacionarCamera(4.5, 'z');
+    update();
 }
+
 
 void MainWindow::seletor(int index) {
     if (index >= 0 && index < objetos.size()) {
@@ -471,9 +444,14 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
 }
 
 void MainWindow::aplicarSCN(){
-    //Criando Clone = Matriz
-    for(int i = 0; i<objetos.size(); i++){
+    // Criando Clone = Matriz
+    for (int i = 0; i < objetos.size(); i++) {
         objetos[i].clone = objetos[i].matriz;
+    }
+
+    // Aplicar transformações da câmera
+    for (int i = 0; i < objetos.size(); i++) {
+        objetos[i].clone = camera.aplicarTransformacao(objetos[i].clone);
     }
     //Transladando Wc para a origem e o mundo de -Wcx e -Wcy
     //Calcula o centro geométrico da Window

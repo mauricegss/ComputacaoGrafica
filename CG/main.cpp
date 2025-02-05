@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     Matriz Gardevoir = reader.lerMatriz(objFilename, "GardevoirMega");
     mainWindow.adicionarObjeto(Gardevoir);  // Adicionando o objeto externo à janela principal
     */
-    QString objFilename2 = "K:/projeto.cg/Arquivosobj/8819/Pokemon XY/Vaporeon/Vaporeon.obj";
+    QString objFilename2 = "C:/GitHub/ComputacaoGrafica/Arquivosobj/8819/Pokemon XY/Vaporeon/Vaporeon.obj";
     Matriz Vaporeon = reader.lerMatriz(objFilename2, "Vaporeon");
     mainWindow.adicionarObjeto(Vaporeon);  // Adicionando o objeto externo à janela principal
 
